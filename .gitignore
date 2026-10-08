@@ -1,0 +1,47 @@
+# OS / editors
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+build/
+dist/
+
+# Node
+node_modules/
+templates/*/dist/
+*.tsbuildinfo
+npm-debug.log*
+
+# BigViz workspaces and generated output
+bigviz/*/designs/
+bigviz/*/assets/
+bigviz/*/shots/
+bigviz/*/backup/
+.bigviz-probe.json
+examples/*/designs/
+examples/*/assets/
+examples/*/backup/
+
+# Playwright
+playwright-report/
+test-results/

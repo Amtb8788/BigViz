@@ -1,0 +1,253 @@
+/* PodiumCrown styles (scoped via <style scoped src>). Positions come from CSS vars set by the
+   component from CrownGeometry, so the effect follows the artwork instead of magic numbers. */
+.bv-crown {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.bv-crown i {
+  position: absolute;
+  display: block;
+}
+
+/* Back layer under the base image; fades in with the winner label; top edge feathered so the
+   rays are not hard-cut by the panel title */
+.bv-crown--back {
+  z-index: -1;
+  opacity: 0;
+  mask-image: linear-gradient(to bottom, transparent 0, #000 9%);
+  animation: bv-crown-in 0.8s ease-out var(--crown-in) forwards;
+}
+
+/* Front layer: deliberately NO opacity animation here (see the component comment). Its children
+   start transparent and only appear when their own loops start. */
+
+.bv-crown__rays {
+  top: var(--cy);
+  left: var(--cx);
+  width: 42%;
+  aspect-ratio: 1;
+  background: repeating-conic-gradient(rgb(255 214 120 / 26%) 0deg 2.5deg, transparent 2.5deg 22.5deg);
+  filter: blur(1.5px);
+  mask-image: radial-gradient(circle, transparent 10%, #000 22%, transparent 66%);
+  transform: translate(-50%, -50%);
+  animation: bv-crown-rays 32s linear infinite;
+}
+
+.bv-crown__glow {
+  top: var(--cy);
+  left: var(--cx);
+  width: 30%;
+  aspect-ratio: 1;
+  background: radial-gradient(circle, rgb(255 205 100 / 50%) 0, rgb(255 170 50 / 20%) 38%, transparent 68%);
+  transform: translate(-50%, -50%);
+  animation:
+    bv-crown-burst 1.2s ease-out var(--crown-in) both,
+    bv-crown-breathe 3.2s ease-in-out var(--crown-loop) infinite alternate;
+}
+
+/* Metal sheen: masked by the base image itself, clipped to the trophy box */
+.bv-crown__shine {
+  inset: 0;
+  clip-path: inset(var(--cup-t) var(--cup-r) var(--cup-b) var(--cup-l));
+  mix-blend-mode: screen;
+  mask-image: var(--crown-mask);
+  mask-size: 100% 100%;
+}
+
+.bv-crown__shine::before {
+  position: absolute;
+  top: 0;
+  left: var(--cup-l);
+  width: var(--cup-w);
+  height: var(--cup-h);
+  content: '';
+  background: linear-gradient(
+    110deg,
+    transparent 32%,
+    rgb(255 230 170 / 25%) 44%,
+    rgb(255 248 225 / 65%) 50%,
+    rgb(255 230 170 / 25%) 56%,
+    transparent 68%
+  );
+  transform: translateX(-110%);
+  animation: bv-crown-shine 4s ease-in-out var(--crown-loop) infinite;
+}
+
+/* Cross glint on the star when the sheen passes the cup centre */
+.bv-crown__glint {
+  top: var(--star-y);
+  left: var(--cx);
+  width: 7%;
+  aspect-ratio: 1;
+  background:
+    radial-gradient(circle, #fff 0, rgb(255 230 160 / 80%) 6%, transparent 22%),
+    linear-gradient(90deg, transparent 0, rgb(255 245 210 / 95%) 50%, transparent 100%) center / 100% 2px no-repeat,
+    linear-gradient(0deg, transparent 0, rgb(255 245 210 / 95%) 50%, transparent 100%) center / 2px 100% no-repeat;
+  mix-blend-mode: screen;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.2);
+  animation: bv-crown-glint 4s ease-out var(--crown-loop) infinite;
+}
+
+/* Two staggered ripples spreading from the pedestal ring */
+.bv-crown__ripple {
+  top: var(--ring-y);
+  left: var(--cx);
+  width: 21%;
+  height: 5%;
+  border: 1.5px solid rgb(255 214 120 / 90%);
+  border-radius: 50%;
+  box-shadow:
+    0 0 8px rgb(255 190 60 / 70%),
+    inset 0 0 6px rgb(255 190 60 / 50%);
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.8);
+  animation: bv-crown-ripple 3s ease-out var(--crown-loop) infinite;
+}
+
+.bv-crown__ripple--late {
+  animation-delay: calc(var(--crown-loop) + 1.5s);
+}
+
+/* Embers rising from the ring across the trophy width */
+.bv-crown__ember {
+  bottom: var(--cup-b);
+  left: calc(var(--cup-l) + var(--cup-w) * var(--x) / 100);
+  width: var(--s);
+  height: var(--s);
+  background: #fff3c4;
+  border-radius: 50%;
+  box-shadow:
+    0 0 4px 1px rgb(255 200 80 / 90%),
+    0 0 10px 2px rgb(255 160 40 / 50%);
+  opacity: 0;
+  animation: bv-crown-ember var(--dur) ease-out calc(var(--crown-loop) + var(--delay)) infinite;
+}
+
+@keyframes bv-crown-in {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes bv-crown-rays {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes bv-crown-burst {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.4);
+  }
+
+  35% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.5);
+  }
+
+  100% {
+    opacity: 0.85;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes bv-crown-breathe {
+  from {
+    opacity: 0.85;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.12);
+  }
+}
+
+/* 4 s cycle: the first 1.2 s sweeps across the trophy, then it waits off to the right */
+@keyframes bv-crown-shine {
+  0% {
+    transform: translateX(-110%);
+  }
+
+  30%,
+  100% {
+    transform: translateX(110%);
+  }
+}
+
+/* Same period as the sheen; lights up as the sheen crosses the cup centre (~15 %) */
+@keyframes bv-crown-glint {
+  0%,
+  10% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.2) rotate(0deg);
+  }
+
+  17% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1) rotate(45deg);
+  }
+
+  32%,
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.4) rotate(90deg);
+  }
+}
+
+@keyframes bv-crown-ripple {
+  0% {
+    opacity: 0.9;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.9);
+  }
+}
+
+@keyframes bv-crown-ember {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(1);
+  }
+
+  15% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(var(--dx), -6em) scale(0.4);
+  }
+}
+
+/* Reduced motion: keep the static rays and glow, drop everything that moves */
+@media (prefers-reduced-motion: reduce) {
+  .bv-crown--back {
+    opacity: 1;
+    animation: none;
+  }
+
+  .bv-crown i,
+  .bv-crown__shine::before {
+    animation: none;
+  }
+
+  .bv-crown__glow {
+    opacity: 0.85;
+  }
+
+  .bv-crown__shine,
+  .bv-crown__glint,
+  .bv-crown__ripple,
+  .bv-crown__ember {
+    display: none;
+  }
+}

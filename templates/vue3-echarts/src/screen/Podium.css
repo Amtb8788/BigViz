@@ -1,0 +1,123 @@
+/* Podium styles (scoped via <style scoped src>) */
+.bv-podium {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  height: 100%;
+}
+
+/* All remaining height goes to the podium; size container for the contain rule below */
+.bv-podium__fit {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  padding-top: 10px;
+  margin: 0 -8px;
+  container-type: size;
+}
+
+/* Contain sizing: width = min(container width, container height × real aspect).
+   --aspect comes from the manifest, never a typed-in ratio. */
+.bv-podium__board {
+  position: relative;
+  width: min(100cqw, 100cqh * var(--aspect));
+  /* Lets the back effect layer sit under the image without leaking out of the panel */
+  isolation: isolate;
+}
+
+.bv-podium__scene {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: var(--aspect);
+  pointer-events: none;
+  user-select: none;
+}
+
+.bv-podium__tag {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.15;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, calc(var(--ty) + 6px));
+  animation: bv-podium-tag 0.6s cubic-bezier(0.22, 1, 0.36, 1) var(--d) forwards;
+}
+
+.bv-podium__name {
+  max-width: 100%;
+  overflow: hidden;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--bv-text);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-shadow: 0 1px 3px rgb(0 20 60 / 90%);
+}
+
+.bv-podium__value {
+  font-family: var(--bv-font-number);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--bv-silver);
+  white-space: nowrap;
+  text-shadow:
+    0 1px 3px rgb(0 20 60 / 90%),
+    0 0 8px var(--bv-glow);
+}
+
+.bv-podium__value small {
+  margin-left: 4px;
+  font-size: 0.68em;
+  font-weight: 400;
+}
+
+.bv-podium__tag--1 .bv-podium__name {
+  font-size: 15px;
+}
+
+.bv-podium__tag--1 .bv-podium__value {
+  font-size: 22px;
+  color: var(--bv-gold);
+  text-shadow:
+    0 1px 3px rgb(40 20 0 / 80%),
+    0 0 10px rgb(255 190 60 / 60%);
+}
+
+.bv-podium__tag--3 .bv-podium__value {
+  color: var(--bv-bronze);
+}
+
+/* Remainder: fixed height for two rows so rows do not stretch into big gaps */
+.bv-podium__rest {
+  flex: 0 0 auto;
+  height: 84px;
+}
+
+.bv-podium-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 15px;
+  color: var(--bv-text-muted);
+}
+
+@keyframes bv-podium-tag {
+  to {
+    opacity: 1;
+    transform: translate(-50%, var(--ty));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bv-podium__tag {
+    opacity: 1;
+    transform: translate(-50%, var(--ty));
+    animation: none;
+  }
+}

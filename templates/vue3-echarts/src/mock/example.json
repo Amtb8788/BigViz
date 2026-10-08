@@ -1,0 +1,49 @@
+{
+  "project": "Riverside Tunnel Demo",
+  "kpis": [
+    { "id": "users", "value": 12860, "delta": 3.2 },
+    { "id": "pointsRedeemed", "value": 2486920, "delta": 8.7 },
+    { "id": "redemptions", "value": 8562, "delta": 6.1 },
+    { "id": "itemsRedeemed", "value": 10935, "delta": -1.4 }
+  ],
+  "trend": {
+    "months": ["2024-11", "2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10"],
+    "points": [128000, 146000, 152000, 160000, 158000, 168000, 176000, 188000, 196000, 212000, 238000, 286420],
+    "people": [1820, 2050, 2160, 2240, 2210, 2380, 2490, 2650, 2780, 3010, 3320, 3846]
+  },
+  "categories": [
+    { "name": "Safety Gear", "value": 3937 },
+    { "name": "Daily Goods", "value": 2952 },
+    { "name": "Electronics", "value": 1640 },
+    { "name": "Snacks", "value": 1312 },
+    { "name": "Other", "value": 1094 }
+  ],
+  "cycle": { "people": 3846, "earned": 286420, "redeemed": 198760, "redemptions": 1126 },
+  "conversion": { "avgPoints": 74.5, "redeemers": 892, "usageRate": 69.4, "participationRate": 23.2 },
+  "teams": [
+    { "team": "Team A1", "points": 4860 },
+    { "team": "Team B3", "points": 4512 },
+    { "team": "Team C2", "points": 4238 },
+    { "team": "Team D1", "points": 3976 },
+    { "team": "Team E4", "points": 3754 }
+  ],
+  "people": [
+    { "id": 1001, "name": "Avery K.", "team": "Team A1", "points": 386 },
+    { "id": 1002, "name": "Blake M.", "team": "Team B3", "points": 362 },
+    { "id": 1003, "name": "Casey R.", "team": "Team C2", "points": 348 },
+    { "id": 1004, "name": "Drew S.", "team": "Team D1", "points": 331 },
+    { "id": 1005, "name": "Emery T.", "team": "Team E4", "points": 317 },
+    { "id": 1006, "name": "Finley W.", "team": "Team A1", "points": 302 },
+    { "id": 1007, "name": "Gray L.", "team": "Team B3", "points": 289 },
+    { "id": 1008, "name": "Harper J.", "team": "Team C2", "points": 276 },
+    { "id": 1009, "name": "Indy P.", "team": "Team D1", "points": 263 },
+    { "id": 1010, "name": "Jules N.", "team": "Team E4", "points": 251 }
+  ],
+  "goods": [
+    { "name": "Grip Work Gloves", "times": 1286 },
+    { "name": "Hi-Vis Vest", "times": 968 },
+    { "name": "Steel Travel Mug", "times": 842 },
+    { "name": "Laundry Liquid 2 kg", "times": 716 },
+    { "name": "Power Bank 10k", "times": 405 }
+  ]
+}

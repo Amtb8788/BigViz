@@ -1,0 +1,116 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  python:
+    name: CLI tests (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        working-directory: cli
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: "3.12"
+      - name: Install
+        run: uv sync
+      - name: Test
+        run: uv run --with pytest pytest -q
+
+  template:
+    name: Template typecheck and build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: templates/vue3-echarts
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: templates/vue3-echarts/package-lock.json
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run build
+
+  skills:
+    name: Skill frontmatter
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pyyaml
+      - name: Validate SKILL.md files
+        shell: python
+        run: |
+          import pathlib, re, sys
+          import yaml
+
+          errors = []
+          skills = sorted(pathlib.Path("plugins/bigviz/skills").glob("*/SKILL.md"))
+          if not skills:
+              errors.append("no SKILL.md files found")
+          for path in skills:
+              folder = path.parent.name
+              text = path.read_text(encoding="utf-8")
+              m = re.match(r"^---\r?\n(.*?)\r?\n---\r?\n", text, re.S)
+              if not m:
+                  errors.append(f"{path}: missing frontmatter")
+                  continue
+              try:
+                  fm = yaml.safe_load(m.group(1))
+              except yaml.YAMLError as exc:
+                  errors.append(f"{path}: invalid YAML: {exc}")
+                  continue
+              if not isinstance(fm, dict):
+                  errors.append(f"{path}: frontmatter is not a mapping")
+                  continue
+              if set(fm) != {"name", "description"}:
+                  errors.append(f"{path}: keys must be exactly name+description, got {sorted(fm)}")
+              name = str(fm.get("name", ""))
+              desc = str(fm.get("description", ""))
+              if name != folder:
+                  errors.append(f"{path}: name '{name}' != folder '{folder}'")
+              if not re.fullmatch(r"[a-z0-9]+(-[a-z0-9]+)*", name) or len(name) > 64:
+                  errors.append(f"{path}: name must be kebab-case, at most 64 chars")
+              if not desc.strip() or len(desc) > 1024:
+                  errors.append(f"{path}: description must be 1-1024 chars (got {len(desc)})")
+              if "<" in desc or ">" in desc:
+                  errors.append(f"{path}: description must not contain angle brackets")
+              body_lines = text[m.end():].count("\n")
+              if body_lines >= 300:
+                  errors.append(f"{path}: body has {body_lines} lines, keep it under 300")
+              print(f"ok  {folder}  desc={len(desc)} body={body_lines}")
+          if errors:
+              print("\n".join(errors))
+              sys.exit(1)
+
+  secrets:
+    name: Secret scan (gitleaks)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

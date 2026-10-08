@@ -1,0 +1,75 @@
+# Editorial Dark: international editorial data design (Bloomberg / FT / Linear).
+# Restraint over glow: typography, scale contrast, grid and white space do the work.
+name: editorial-dark
+label: Editorial Dark
+palette:
+  bg0: "#07080B"
+  bg1: "#0D1017"
+  primary: "#4FD8EB"
+  accent: "#D9B77A"
+  warn: "#E8A25C"
+  ok: "#6FD3A6"
+  violet: "#8A93A6"
+  text: "#F5F7FA"
+fonts:
+  ui: "Inter, 'HarmonyOS Sans SC', 'Source Han Sans SC', sans-serif"
+  number: "'Inter Tabular', 'DIN Pro', Inter, sans-serif"
+prompt:
+  positioning:
+    en: >-
+      Flagship data big-screen UI for a command center and showroom. Art direction:
+      international editorial data design, like an Apple keynote data slide, the
+      Stripe / Linear product UI, Bloomberg and Financial Times data journalism; not a
+      typical smart-city dashboard. Mood: restrained, precise, expensive, quiet yet
+      powerful. The premium feel comes entirely from typography, the strong scale
+      contrast between huge numbers and tiny labels, a precise grid, generous white
+      space and very few colours; almost no glow.
+    zh: >-
+      旗舰级数据可视化大屏 UI 设计稿，用于指挥中心与展厅。艺术方向：像 Apple 发布会的
+      数据页、Stripe / Linear 的产品界面、Bloomberg 与 Financial Times 的数据新闻图表
+      那样的国际化 editorial 数据设计，不是国内智慧城市大屏。气质：克制、精密、昂贵、
+      安静而有力量。高级感完全来自字体排印、超大数字与细小标签的强烈尺度对比、精确
+      栅格、大面积留白和极少的颜色，几乎不靠发光。
+  material: >-
+    Background: near-black graphite easing very slowly from bg0 to bg1, almost
+    neutral with only a hint of cool tone, not saturated blue. One very faint, very
+    wide cool ambient light in the upper middle, like a soft beam in a dark room. No
+    particles, no grid. Almost monochrome: white and greys. The single accent colour
+    (primary) is used only for the main trend line, data bars and period-over-period
+    deltas; the top three ranks use the accent colour. Accent area stays under 6% of
+    the frame. Chart lines are hairline (1-1.5px), fills almost transparent. Only the
+    latest data point of the trend chart carries one tiny soft glow; nothing else
+    glows. Motion is implied in a still frame: small delta arrows, one bright dot at
+    the end of a line, a hairline under the main title.
+  panel: >-
+    Modules have no borders, no background cards and no corner ornaments. Areas are
+    separated only by white space, 1px hairline dividers (white at 8% opacity) and a
+    uniform module heading: index number + title + small uppercase English caption,
+    e.g. "02 POINTS TREND". Rankings: rank number + name + 2px hairline data bar
+    proportional to the value + right-aligned value; generous row spacing, no table
+    rules, no header fills.
+  typography:
+    en: >-
+      Typography is the hero. Modern sans-serif (Inter / Helvetica Now class) for text
+      and geometric tabular figures (DIN / Inter Tabular) for numbers. Exactly three
+      size tiers: key numbers largest, module data medium, captions smallest and
+      muted. Key numbers are huge in a light or regular weight, never bold, tightly
+      tracked; labels are small with wide tracking, English labels in small caps. The
+      main title is medium weight, widely tracked, pure white, no glow. Every glyph is
+      crisp vector-sharp.
+    zh: >-
+      字体排印是主角。中文用现代无衬线（思源黑体 / HarmonyOS Sans 风格），数字用几何
+      等宽数字字体（DIN / Inter Tabular 风格）。字号严格三级：核心数字最大，模块数据
+      中等，说明文字最小且弱化。核心数字使用超大号细字重（Light / Regular）而不是粗体，
+      字距紧凑；标签全部小号、字距放宽，英文标签用全大写小字。主标题用中等字重、大字距，
+      纯白，不发光。所有文字像矢量一样锐利。
+  avoid:
+    en: >-
+      blue smart-city / government dashboard tech style, saturated blue background,
+      glow and neon, stacked cards, boxed outlines, tech corner ornaments, HUD and scan
+      lines, cyberpunk and game UI, 3D icons, Excel-like tables, bold numbers, crowding
+      and piles of small text
+    zh: >-
+      国内智慧城市 / 政务大屏的蓝色科技风、饱和蓝色背景、发光与霓虹、卡片堆叠、套框
+      描边、科技边角装饰、HUD 与扫描线、赛博朋克与游戏 UI、3D 图标、Excel 式表格、
+      粗体数字、拥挤与小字堆砌

@@ -1,0 +1,304 @@
+/* HeroHub styles (scoped via <style scoped src>) */
+.bv-hub {
+  position: relative;
+  flex-shrink: 0;
+  /* Centred in the remaining space when the stage grows taller */
+  margin: auto;
+}
+
+.bv-hub__ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.bv-hub__arrow,
+.bv-hub__stop-mid {
+  fill: var(--bv-accent);
+  stop-color: var(--bv-accent);
+}
+
+.bv-hub__stop-end {
+  stop-color: var(--bv-primary);
+}
+
+/* Static dashed orbit (an ellipse cannot rotate without distorting, and dash offset is a paint) */
+.bv-hub__track {
+  fill: none;
+  stroke: color-mix(in srgb, var(--bv-accent) 25%, transparent);
+  stroke-dasharray: 4 10;
+  stroke-width: 2;
+}
+
+.bv-hub__arc {
+  filter: drop-shadow(0 0 6px var(--bv-glow));
+  fill: none;
+  stroke: var(--bv-accent);
+  stroke-linecap: round;
+  stroke-width: 6;
+  animation: bv-hub-fade 0.45s ease-out var(--d) both;
+}
+
+.bv-hub__orbit {
+  animation: bv-hub-fade 0.8s ease-out var(--done) both;
+}
+
+/* Centre artwork wrapper: absolute box sized from the manifest aspect */
+.bv-hub__visual {
+  position: absolute;
+  pointer-events: none;
+  animation: bv-hub-pop 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) var(--hub-in) both;
+  transform-origin: 50% 60%;
+}
+
+.bv-hub__img {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  user-select: none;
+}
+
+/* Pedestal ripples: ellipse outline grows and fades from the base centre, two half a cycle apart */
+.bv-hub__wave {
+  position: absolute;
+  top: calc(var(--base-y) * 100%);
+  left: 50%;
+  width: 72%;
+  aspect-ratio: 360 / 110;
+  margin-left: -36%;
+  translate: 0 -50%;
+  border: 2px solid color-mix(in srgb, var(--bv-accent) 70%, transparent);
+  border-radius: 50%;
+  box-shadow: 0 0 16px color-mix(in srgb, var(--bv-accent) 45%, transparent);
+  opacity: 0;
+  animation: bv-hub-wave 4.3s ease-out var(--done) infinite;
+}
+
+.bv-hub__wave--late {
+  animation-delay: calc(var(--done) + 2.15s);
+}
+
+/* Node: positioned at its orbit point; icon left, glass card right */
+.bv-hub__node {
+  position: absolute;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  transform: translate(-50%, -50%);
+}
+
+.bv-hub__icon {
+  flex-shrink: 0;
+  width: 120px;
+  pointer-events: none;
+  animation: bv-hub-rise 0.5s ease-out var(--d) both;
+}
+
+.bv-hub__icon-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  animation: bv-hub-float 5.1s ease-in-out calc(var(--step) * -1.3s) infinite;
+}
+
+.bv-hub__card {
+  position: relative;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  min-width: 150px;
+  overflow: hidden;
+  color: var(--bv-text);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--bv-bg1) 80%, var(--bv-primary)),
+    color-mix(in srgb, var(--bv-bg0) 90%, var(--bv-primary))
+  );
+  border: 1px solid var(--bv-line);
+  border-radius: 6px;
+  box-shadow:
+    0 0 14px color-mix(in srgb, var(--bv-primary) 35%, transparent),
+    0 6px 16px rgb(0 0 0 / 45%),
+    inset 0 1px 0 color-mix(in srgb, var(--bv-text) 35%, transparent);
+  animation: bv-hub-slide 0.5s ease-out calc(var(--d) + 0.12s) both;
+}
+
+/* Highlight border when a dot passes; opacity only */
+.bv-hub__card::after {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  content: '';
+  border: 1px solid var(--bv-accent);
+  border-radius: inherit;
+  box-shadow: inset 0 0 12px var(--bv-glow);
+  opacity: 0;
+  transition: opacity 0.35s ease-out;
+}
+
+.bv-hub__node.is-pulse .bv-hub__card::after {
+  opacity: 1;
+}
+
+.bv-hub__title {
+  position: relative;
+  padding: 7px 14px;
+  overflow: hidden;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  white-space: nowrap;
+  text-shadow: 0 0 6px var(--bv-glow);
+  background: linear-gradient(90deg, color-mix(in srgb, var(--bv-primary) 75%, transparent), transparent);
+  border-bottom: 1px solid var(--bv-line);
+}
+
+.bv-hub__title::before {
+  position: absolute;
+  inset: 0;
+  width: 50%;
+  pointer-events: none;
+  content: '';
+  background: linear-gradient(100deg, transparent, color-mix(in srgb, var(--bv-accent) 18%, transparent), transparent);
+  transform: translateX(-100%);
+  animation: bv-hub-sweep 7.3s ease-in-out calc(var(--step) * 1.7s + var(--done)) infinite;
+}
+
+.bv-hub__body {
+  padding: 8px 14px 10px;
+}
+
+.bv-hub__label {
+  font-size: 13px;
+  color: var(--bv-text-dim);
+  white-space: nowrap;
+}
+
+.bv-hub__value {
+  margin-top: 4px;
+  font-family: var(--bv-font-number);
+  font-size: 24px;
+  font-weight: 700;
+  white-space: nowrap;
+  transform-origin: left center;
+}
+
+.bv-hub__value small {
+  margin-left: 4px;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.bv-hub__node.is-pulse .bv-hub__value {
+  animation: bv-hub-bump 0.8s ease-out;
+}
+
+@keyframes bv-hub-fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes bv-hub-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes bv-hub-rise {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes bv-hub-slide {
+  from {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes bv-hub-wave {
+  0% {
+    opacity: 0;
+    transform: scale(0.55);
+  }
+
+  20% {
+    opacity: 0.8;
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.35);
+  }
+}
+
+@keyframes bv-hub-float {
+  0%,
+  100% {
+    transform: translateY(-6px);
+  }
+
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+/* First 40 % sweeps across, then waits off to the right */
+@keyframes bv-hub-sweep {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  40%,
+  100% {
+    transform: translateX(200%);
+  }
+}
+
+@keyframes bv-hub-bump {
+  35% {
+    transform: scale(1.08);
+  }
+}
+
+/* Reduced motion: static final state; the orbit dots are not rendered at all */
+@media (prefers-reduced-motion: reduce) {
+  .bv-hub__arc,
+  .bv-hub__visual,
+  .bv-hub__icon,
+  .bv-hub__icon-img,
+  .bv-hub__card,
+  .bv-hub__title::before,
+  .bv-hub__node.is-pulse .bv-hub__value {
+    animation: none;
+  }
+
+  .bv-hub__wave {
+    display: none;
+  }
+}

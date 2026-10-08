@@ -1,0 +1,13 @@
+{
+  "name": "bigviz",
+  "owner": {
+    "name": "Amtb8788"
+  },
+  "plugins": [
+    {
+      "name": "bigviz",
+      "source": "./plugins/bigviz",
+      "description": "AI-crafted big-screen data dashboards: brief, AI mockups, asset matting and HD regen, a production Vue 3 + ECharts screen, and visual QA."
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "name": "bigviz",
+  "version": "0.1.0",
+  "description": "AI-crafted big-screen data dashboards: from one sentence to a production Vue 3 screen. Skills for brief, design, assets, build and QA, driven by the bigviz CLI.",
+  "author": {
+    "name": "Amtb8788",
+    "url": "https://github.com/Amtb8788"
+  },
+  "homepage": "https://github.com/Amtb8788/BigViz",
+  "repository": "https://github.com/Amtb8788/BigViz",
+  "license": "MIT",
+  "keywords": [
+    "dashboard",
+    "data-visualization",
+    "big-screen",
+    "command-center",
+    "vue3",
+    "echarts",
+    "ai-image",
+    "agent-skills"
+  ]
+}

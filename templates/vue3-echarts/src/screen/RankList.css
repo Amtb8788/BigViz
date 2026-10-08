@@ -1,0 +1,320 @@
+/* RankList styles (scoped via <style scoped src>) */
+.bv-rank {
+  height: 100%;
+}
+
+.bv-rank__track {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+/* Scroll mode: each row is 1/visible of the viewport; the track moves up by rows */
+.bv-rank.is-scroll {
+  overflow: hidden;
+}
+
+.bv-rank.is-scroll .bv-rank__track {
+  justify-content: flex-start;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: translateY(calc(var(--offset) * -100% / var(--visible)));
+}
+
+.bv-rank.is-scroll .bv-rank__track.is-resetting {
+  transition: none;
+}
+
+.bv-rank.is-scroll .bv-rank__item {
+  flex: 0 0 calc(100% / var(--visible));
+}
+
+.bv-rank__item {
+  position: relative;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  font-size: 17px;
+  color: var(--bv-text);
+  animation: bv-rank-in 0.6s ease-out calc(var(--start) + var(--i) * 0.08s) both;
+}
+
+/* Highlight: background wash + left bar, opacity only; bleeds 4px outward without affecting layout */
+.bv-rank__item::before,
+.bv-rank__item::after {
+  position: absolute;
+  pointer-events: none;
+  content: '';
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.bv-rank__item::before {
+  inset: -4px -6px;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--bv-accent) 16%, transparent), transparent);
+  border-radius: 4px;
+}
+
+.bv-rank__item::after {
+  top: -4px;
+  bottom: -4px;
+  left: -6px;
+  width: 2px;
+  background: var(--bv-accent);
+  box-shadow: 0 0 6px var(--bv-glow);
+}
+
+.bv-rank__item.is-active::before,
+.bv-rank__item.is-active::after {
+  opacity: 1;
+}
+
+.bv-rank__no {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 28px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--bv-text);
+}
+
+/* Medal badges: shield shape, gold/silver/bronze for 1–3, blue after */
+.bv-rank--medal .bv-rank__no {
+  position: relative;
+  clip-path: polygon(50% 0, 100% 18%, 100% 62%, 50% 100%, 0 62%, 0 18%);
+}
+
+.bv-rank--medal .bv-rank__no--1 {
+  background: linear-gradient(180deg, #ffe08a, #f0a020);
+}
+
+.bv-rank--medal .bv-rank__no--2 {
+  background: linear-gradient(180deg, var(--bv-silver), #8fa6c8);
+}
+
+.bv-rank--medal .bv-rank__no--3 {
+  background: linear-gradient(180deg, var(--bv-bronze), #c86a3a);
+}
+
+.bv-rank--medal .bv-rank__no--4 {
+  background: linear-gradient(180deg, var(--bv-accent), var(--bv-primary));
+}
+
+/* Medal sheen, clipped by the shield */
+.bv-rank--medal .bv-rank__no--1::after,
+.bv-rank--medal .bv-rank__no--2::after,
+.bv-rank--medal .bv-rank__no--3::after {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  content: '';
+  background: linear-gradient(110deg, transparent 30%, rgb(255 255 255 / 65%) 50%, transparent 70%);
+  transform: translateX(-120%);
+  animation: bv-rank-sheen 5.3s ease-in-out var(--done) infinite;
+}
+
+.bv-rank--medal .bv-rank__no--2::after {
+  animation-delay: calc(var(--done) + 0.4s);
+}
+
+.bv-rank--medal .bv-rank__no--3::after {
+  animation-delay: calc(var(--done) + 0.8s);
+}
+
+.bv-rank--plain .bv-rank__no {
+  width: 18px;
+  color: var(--bv-text-dim);
+}
+
+.bv-rank--plain .bv-rank__no--1 {
+  color: var(--bv-warn);
+}
+
+.bv-rank__img {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.bv-rank--medal .bv-rank__img {
+  border: 1px solid var(--bv-line);
+  border-radius: 50%;
+}
+
+.bv-rank__label {
+  flex-shrink: 0;
+  width: 110px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bv-rank--plain .bv-rank__label {
+  width: 140px;
+}
+
+/* With a sub text (people ranking) the main label narrows */
+.bv-rank__item:has(.bv-rank__sub) .bv-rank__label {
+  width: 72px;
+}
+
+.bv-rank__sub {
+  flex-shrink: 0;
+  width: 64px;
+  overflow: hidden;
+  font-size: 14px;
+  color: var(--bv-text-dim);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bv-rank__bar {
+  position: relative;
+  flex: 1;
+  height: 12px;
+  overflow: hidden;
+  background: var(--bv-track);
+  border-radius: 6px;
+}
+
+/* Full-width bar scaled with scaleX; growth and refresh are transform transitions */
+.bv-rank__bar i {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: linear-gradient(90deg, var(--bv-primary), var(--bv-accent));
+  border-radius: 6px;
+  box-shadow: 0 0 8px var(--bv-glow);
+  transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+  transform-origin: left center;
+}
+
+/* Faint streak running left → right, staggered per row */
+.bv-rank__bar i::after {
+  position: absolute;
+  inset: 0;
+  width: 30%;
+  content: '';
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 22%), transparent);
+  transform: translateX(-100%);
+  animation: bv-rank-streak 3.7s linear calc(var(--done) + var(--i) * 0.53s) infinite;
+}
+
+/* Glowing tip of the leader's bar: fades in after growth, then breathes */
+.bv-rank__tip {
+  position: absolute;
+  top: 50%;
+  right: 1px;
+  width: 10px;
+  height: 10px;
+  margin-top: -5px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease 1.1s;
+}
+
+.bv-rank__tip::after {
+  position: absolute;
+  inset: 0;
+  content: '';
+  background: radial-gradient(circle, #fff 0%, var(--bv-accent) 45%, transparent 72%);
+  border-radius: 50%;
+  animation: bv-rank-tip 2.1s ease-in-out infinite;
+}
+
+.is-grown .bv-rank__tip {
+  opacity: 1;
+}
+
+.bv-rank__value {
+  flex-shrink: 0;
+  min-width: 76px;
+  font-weight: 600;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.bv-rank-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 15px;
+  color: var(--bv-text-muted);
+}
+
+@keyframes bv-rank-in {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes bv-rank-sheen {
+  0% {
+    transform: translateX(-120%);
+  }
+
+  20%,
+  100% {
+    transform: translateX(120%);
+  }
+}
+
+@keyframes bv-rank-streak {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(340%);
+  }
+}
+
+@keyframes bv-rank-tip {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(0.75);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
+/* Reduced motion: no loops, no transitions, bars sit at their final length */
+@media (prefers-reduced-motion: reduce) {
+  .bv-rank__item,
+  .bv-rank--medal .bv-rank__no::after,
+  .bv-rank__bar i::after,
+  .bv-rank__tip::after {
+    animation: none;
+  }
+
+  .bv-rank__item::before,
+  .bv-rank__item::after,
+  .bv-rank__bar i,
+  .bv-rank__tip,
+  .bv-rank.is-scroll .bv-rank__track {
+    transition: none;
+  }
+
+  .bv-rank__bar i::after {
+    opacity: 0;
+  }
+}

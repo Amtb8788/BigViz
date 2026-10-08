@@ -1,0 +1,12 @@
+node_modules/
+dist/
+*.local
+.env.local
+.env.*.local
+.vite/
+*.log
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+.idea/

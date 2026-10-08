@@ -1,0 +1,60 @@
+# Aurora Glass: light-on-dark glassmorphism with colourful aurora accents.
+# Original preset written for BigViz.
+name: aurora-glass
+label: Aurora Glass
+palette:
+  bg0: "#0A0820"
+  bg1: "#161335"
+  primary: "#7C5CFF"
+  accent: "#29E3D6"
+  warn: "#FF8A5B"
+  ok: "#5BE38F"
+  violet: "#E15CFF"
+  text: "#F4F2FF"
+fonts:
+  ui: "'Plus Jakarta Sans', Inter, 'Source Han Sans SC', sans-serif"
+  number: "'Space Grotesk', Inter, sans-serif"
+prompt:
+  positioning:
+    en: >-
+      Premium big-screen dashboard UI in a modern glassmorphism style: calm, luminous
+      and optimistic, like a high-end fintech or climate-tech operations room. The
+      screen feels lit from within by a soft aurora behind frosted glass, colourful but
+      controlled, with clear hierarchy and plenty of breathing room.
+    zh: >-
+      高端数据大屏 UI 设计稿，现代玻璃拟态风格：沉静、通透、积极，像高端金融科技或
+      气候科技的运营中心。画面像被磨砂玻璃后方柔和的极光从内部照亮，色彩丰富但克制，
+      层级清晰，留白充足。
+  material: >-
+    Background: deep indigo night from bg0 to bg1 with two or three large, very
+    soft aurora blooms (primary, accent and violet) drifting behind the glass,
+    heavily blurred, never sharp-edged. No city skyline, no particles, no grid.
+    Illustrations are soft 3D shapes with a matte frosted finish and gentle
+    iridescent rim light, rounded and friendly but grown-up. Chart series use
+    smooth curves, rounded bar caps and soft gradient fills from a series colour to
+    transparent. Light is diffuse; highlights are small and precise.
+  panel: >-
+    Panels are frosted glass cards with a large corner radius, a 1px inner border of
+    white at about 12% opacity and a subtle top-left sheen; the aurora shows through
+    blurred. Panel headings are left-aligned, semi-bold, with a small coloured dot in
+    the panel's series colour. No folded-corner ornaments, no heavy outer glow.
+  typography:
+    en: >-
+      Geometric humanist sans-serif (Plus Jakarta Sans / Inter class) for text and a
+      characterful grotesque (Space Grotesk class) for numbers. All text is crisp
+      vector-sharp, near-white on glass with strong contrast; labels medium weight,
+      key numbers large and semi-bold with tabular figures. Never blurred, glowing or
+      outlined text; no tiny low-contrast captions.
+    zh: >-
+      中文使用思源黑体 / HarmonyOS Sans 这类现代无衬线，数字使用有个性的几何怪诞体
+      （Space Grotesk 风格）等宽数字。所有文字像矢量一样锐利，在玻璃上呈近白色并保持
+      高对比；标签中等字重，核心数字大号半粗体。不要模糊、发光或描边的文字，不要低对比
+      的小字。
+  avoid:
+    en: >-
+      neon cyberpunk, harsh saturated blocks of colour, rainbow overload, hard-edged
+      gradients, tech corner ornaments, HUD scan lines, cluttered stacked cards,
+      cartoon or clip-art style, blurry or garbled text, perspective mock-up
+    zh: >-
+      霓虹赛博朋克、刺眼的饱和色块、彩虹色泛滥、硬边渐变、科技边角装饰、HUD 扫描线、
+      杂乱堆叠的卡片、卡通或剪贴画风格、文字模糊或乱码、透视样机展示

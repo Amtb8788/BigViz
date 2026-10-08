@@ -1,0 +1,65 @@
+/*
+ * BigViz theme tokens.
+ * The first block mirrors the preset palette keys (ARCHITECTURE.md §5):
+ *   bg0 bg1 primary accent warn ok violet text  ->  --bv-bg0 … --bv-text
+ * `bigviz build` regenerates that block from the spec; everything below it is derived,
+ * so changing the eight base colours re-skins the whole kit.
+ * Values here are the `deep-tech-blue` preset.
+ */
+:root {
+  --bv-bg0: #020b1f;
+  --bv-bg1: #06173a;
+  --bv-primary: #1e7bff;
+  --bv-accent: #3fd0ff;
+  --bv-warn: #ffb547;
+  --bv-ok: #2ee6b6;
+  --bv-violet: #8a7bff;
+  --bv-text: #ffffff;
+
+  --bv-font-ui: Inter, 'Source Han Sans', 'Microsoft YaHei', 'PingFang SC', sans-serif;
+  --bv-font-number: 'DIN Alternate', Bahnschrift, Inter, sans-serif;
+
+  /* Derived tokens (do not edit per project; edit the base colours instead) */
+  --bv-danger: #ff5a6a;
+  --bv-text-dim: color-mix(in srgb, var(--bv-text) 82%, var(--bv-accent));
+  --bv-text-muted: color-mix(in srgb, var(--bv-text) 50%, var(--bv-primary));
+  --bv-line: color-mix(in srgb, var(--bv-primary) 45%, transparent);
+  --bv-line-soft: color-mix(in srgb, var(--bv-primary) 20%, transparent);
+  --bv-glow: color-mix(in srgb, var(--bv-accent) 60%, transparent);
+  --bv-panel-top: color-mix(in srgb, var(--bv-primary) 28%, var(--bv-bg1) 72%);
+  --bv-panel-bottom: color-mix(in srgb, var(--bv-primary) 14%, var(--bv-bg0) 86%);
+  --bv-track: color-mix(in srgb, var(--bv-primary) 28%, transparent);
+  --bv-gold: #ffd66b;
+  --bv-silver: #e8f0ff;
+  --bv-bronze: #ffc49a;
+
+  /* Panel chrome */
+  --bv-radius: 4px;
+  --bv-gap: 16px;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  background: var(--bv-bg0);
+  color: var(--bv-text);
+  font-family: var(--bv-font-ui);
+}
+
+#app {
+  height: 100%;
+}
+
+/* Shared visually-hidden helper for screen-reader-only text */
+.bv-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}

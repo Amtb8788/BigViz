@@ -1,0 +1,67 @@
+# Deep Tech Blue: the classic command-center look. Deep navy night, glass panels,
+# one glowing 3D hero in the middle. Hex values live in `palette`; prompt fragments
+# refer to colour roles so spec overrides stay consistent.
+name: deep-tech-blue
+label: Deep Tech Blue
+palette:
+  bg0: "#020B1F"
+  bg1: "#06173A"
+  primary: "#1E7BFF"
+  accent: "#3FD0FF"
+  warn: "#FFB547"
+  ok: "#2EE6B6"
+  violet: "#8A7BFF"
+  text: "#FFFFFF"
+fonts:
+  ui: "Inter, 'Source Han Sans SC', 'Microsoft YaHei', sans-serif"
+  number: "'DIN Alternate', 'DIN Pro', Inter, sans-serif"
+prompt:
+  positioning:
+    en: >-
+      Flagship-quality big-screen dashboard UI in a deep-blue tech style, with a 3D
+      hero visual in the center as the focal point. The quality bar is the flagship
+      work of top data-visualisation studios: a deep navy night background, one
+      refined glowing 3D centerpiece, surrounded by translucent glass data panels;
+      layered, clean, airy blue light, like a high-end C4D / Octane render combined
+      with precise UI. Full but orderly, refined details, believable light.
+    zh: >-
+      顶级商业级的数据可视化大屏 UI 设计稿，深蓝科技风，中央 3D 主视觉为视觉中心。
+      质感对标国内一线可视化设计团队的旗舰作品：深邃的藏蓝夜色背景，中央一个精致的
+      3D 发光主视觉，周围是半透明玻璃质感的数据面板，蓝色光效层次丰富、通透、干净，
+      像高端 C4D / Octane 渲染图与精致 UI 的结合。画面饱满但井然有序，细节精致，光影真实。
+  material: >-
+    Background: radial gradient from bg0 to bg1, brighter in the middle, darker
+    corners; a barely visible night city and fine data particles that never compete
+    with the content. Every icon is a refined 3D isometric glass / metal icon in
+    translucent blue with inner glow and a light ring under its base, one consistent
+    style. A glowing concentric platform with tick rings sits under the hero; energy
+    light flows along conduits. Glow is soft and layered, never blown out or blurry.
+  panel: >-
+    Panels are translucent dark-blue frosted glass with a faint inner blue gradient,
+    a 1px bright-blue border and refined folded-corner tech ornaments. Every panel
+    has the same title bar: a short bright-blue vertical bar on the left, bold white
+    title, and a light line under the bar that fades from bright to dark.
+  typography:
+    en: >-
+      Use a clean standard sans-serif (Inter / Helvetica class) for all text, with
+      crisp straight strokes that look like vector text rendered in a real browser;
+      no calligraphic or decorative lettering, no glow blur, no outline ghosting.
+      All labels, legends, card titles and node titles are pure white, medium-bold,
+      large enough (at least half the size of the numbers) and high-contrast; never
+      small dim grey-blue text. Numbers use DIN-style tabular figures in white or
+      bright cyan, sharp. The main title may be bold, widely tracked, with a slight
+      blue outer glow.
+    zh: >-
+      全部中文使用思源黑体 / 微软雅黑这类标准无衬线黑体，笔画清晰、横平竖直，像真实
+      网页上渲染出来的矢量文字一样锐利；不要艺术字、不要发光模糊、不要描边重影。所有
+      标签、图例、卡片标题、节点标题一律用纯白色中粗字重，字号足够大（不小于数字字号
+      的一半），与背景高对比；不要使用暗灰蓝的小字。数字用 DIN 风格等宽数字，白色或
+      亮青蓝，清晰锐利。主标题可用粗体宽字距并带轻微蓝色外发光。
+  avoid:
+    en: >-
+      dim or muddy image, glow blown out into haze, cheap gradients, cluttered or
+      crowded elements, blurry or garbled text, low-quality 3D, cartoonish or childish
+      style, flat crude icons, perspective mock-up presentation
+    zh: >-
+      画面昏暗模糊、发光过曝糊成一片、廉价的渐变色、元素杂乱拥挤、文字模糊或乱码、
+      低质量 3D、卡通幼稚风格、扁平简陋的图标、透视样机展示

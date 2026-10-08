@@ -1,0 +1,46 @@
+[build-system]
+requires = ["hatchling>=1.24,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "bigviz"
+version = "0.1.0"
+description = "Turn a one-line idea into a finished data-visualisation big screen: spec, AI mockups, asset matting, publish and QA."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+authors = [{ name = "BigViz contributors" }]
+keywords = ["dashboard", "data-visualization", "big-screen", "image-generation", "matting"]
+classifiers = [
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Environment :: Console",
+  "Topic :: Multimedia :: Graphics",
+]
+dependencies = [
+  "pillow>=10.0,<13",
+  "numpy>=1.24,<3",
+  "opencv-python-headless>=4.8,<5",
+  "pyyaml>=6.0,<7",
+]
+
+[project.optional-dependencies]
+shot = ["playwright>=1.40,<2"]
+dev = ["pytest>=8.0,<10"]
+
+[project.urls]
+Homepage = "https://github.com/Amtb8788/BigViz"
+
+[project.scripts]
+bigviz = "bigviz.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/bigviz"]
+artifacts = ["src/bigviz/presets/*.yaml", "src/bigviz/starter.yaml"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/bigviz", "tests", "README.md", "pyproject.toml"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"

@@ -1,0 +1,166 @@
+# BigViz example spec: fictional data, safe to publish.
+# Run from this folder: bigviz prompt design && bigviz gen prompts/<file>.txt --tag v1
+version: 1
+meta:
+  slug: safety-points
+  title: Safety Points Data Center
+  project: Riverside Tunnel Demo
+  locale: en
+  canvas: { width: 1920, height: 1080 }
+style:
+  preset: deep-tech-blue
+  palette: {}
+  fonts: {}
+layout:
+  columns: [24, 52, 24]
+  header: { clock: true, weather: false }
+panels:
+  - id: trend
+    column: left
+    title: Points Trend
+    type: line
+    data:
+      x: [Nov, Dec, Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct]
+      series:
+        - { name: Earned, values: [182300, 190450, 176800, 201200, 214900, 223600, 231800, 240150, 252700, 261300, 274900, 286420] }
+        - { name: Redeemed, values: [121400, 128900, 119300, 136700, 142500, 150800, 158200, 163900, 171400, 179600, 188300, 198760] }
+    notes: Earned as a glowing cyan line with area fill, Redeemed as an amber line; highlight October.
+  - id: redeem-mix
+    column: left
+    title: Redemption Mix
+    type: ring
+    data:
+      center: { value: 10935, unit: items }
+      items:
+        - { name: Safety Gear, value: 38 }
+        - { name: Daily Goods, value: 27 }
+        - { name: Electronics, value: 15 }
+        - { name: Food & Drink, value: 12 }
+        - { name: Other, value: 8 }
+    notes: Percent values; legend on one line per item.
+  - id: team-rank
+    column: left
+    title: Team Ranking This Month
+    type: podium
+    data:
+      unit: pts
+      items:
+        - { name: Team A1, value: 4860 }
+        - { name: Team B3, value: 4512 }
+        - { name: Team C2, value: 4238 }
+        - { name: Team D4, value: 3976 }
+        - { name: Team E1, value: 3754 }
+    notes: Top three on a 3D podium (gold, silver, bronze); rows 4-5 as a compact list.
+  - id: conversion
+    column: right
+    title: Conversion
+    type: kpi
+    data:
+      items:
+        - { name: Avg Points per Person, value: 74.5, unit: pts }
+        - { name: Redemption Rate, value: 69.4, unit: "%" }
+        - { name: Participation Rate, value: 23.2, unit: "%" }
+        - { name: Monthly Redeemers, value: 892, unit: people }
+    notes: Two ring gauges for the two rates.
+  - id: people-rank
+    column: right
+    title: Top People This Month
+    type: rank
+    data:
+      unit: pts
+      items:
+        - { name: J. Doe, team: Team A1, value: 386 }
+        - { name: A. Smith, team: Team B3, value: 362 }
+        - { name: R. Roe, team: Team C2, value: 348 }
+        - { name: K. Lee, team: Team D4, value: 331 }
+        - { name: M. Chen, team: Team E1, value: 317 }
+  - id: goods-rank
+    column: right
+    title: Top Redeemed Goods
+    type: rank
+    data:
+      unit: times
+      items:
+        - { name: Anti-slip Gloves, value: 1286 }
+        - { name: Reflective Vest, value: 968 }
+        - { name: Thermal Bottle, value: 842 }
+        - { name: Laundry Liquid 2kg, value: 716 }
+        - { name: Power Bank 10000mAh, value: 405 }
+    notes: Small 3D product icon at the start of each row.
+hero:
+  concept: shield
+  variants:
+    shield: A large translucent blue glass safety shield with a glowing check mark, floating above layered concentric light rings.
+    core: A glowing holographic energy core inside a rotating ring gauge, on a circular glass platform.
+    badge: A 3D hard-hat badge with a laurel wreath, standing on a hexagonal glass pedestal.
+  nodes:
+    - { label: Participants 3846, icon: helmet }
+    - { label: Points Earned 286420, icon: coins }
+    - { label: Points Redeemed 198760, icon: cart }
+    - { label: Redemptions 1126, icon: gift }
+kpis:
+  - { label: Total Users, value: 12860, unit: people, icon: users }
+  - { label: Points Redeemed, value: 2486920, unit: pts, icon: coins }
+  - { label: Redemptions, value: 8562, unit: times, icon: receipt }
+  - { label: Items Redeemed, value: 10935, unit: items, icon: gift }
+pitfalls:
+  - "Team A1"
+  - "Team B3"
+  - "J. Doe"
+  - "Power Bank 10000mAh"
+  - "Laundry Liquid 2kg"
+  - "Redemption Rate"
+  - "Participation Rate"
+  - "pts"
+  - "times"
+# zh locale example (set meta.locale: zh and translate the strings above):
+# pitfalls:
+#   - "钢筋一班"
+#   - "刘*强"
+#   - "劳保用品"
+#   - "数码电器"
+#   - "月度参与得分人数"
+#   - "2026-10-18 14:32:08 星期日"
+design:
+  versions:
+    - { tag: v1, note: "style shoot-out across three presets" }
+    - { tag: v2, note: "hero A/B, shield picked" }
+    - { tag: v3, note: "batch of 5, picked the most text-accurate" }
+    - { tag: v3-fix1, note: "removed duplicated rank row, fixed units and legend" }
+  final: designs/safety-points-v3-fix1-gpt-image-1.png
+assets:
+  - id: center-hub
+    box: [600, 300, 340, 330]
+    matte: unscreen
+    erase: []
+    regen: { subject: "3D translucent blue glass safety shield with a glowing check mark on a holographic pedestal", fill: 0.85 }
+    target: 1000
+    use: HeroHub
+  - id: podium
+    box: [40, 700, 300, 170]
+    matte: unscreen
+    erase: [[150, 760, 40, 50]]
+    regen: { subject: "three translucent blue glass podiums with gold, silver and bronze medals and the numbers 1 2 3", fill: 0.9 }
+    target: 900
+    use: TeamPodium
+  - id: kpi-users
+    box: [470, 110, 70, 70]
+    matte: unscreen
+    erase: []
+    regen: { subject: "3D glossy blue glass people icon", fill: 0.8 }
+    target: 256
+    use: KpiCards
+  - id: kpi-coins
+    box: [690, 110, 70, 70]
+    matte: unscreen
+    erase: []
+    regen: { subject: "3D glossy blue glass stacked coins icon", fill: 0.8 }
+    target: 256
+    use: KpiCards
+  - id: node-helmet               # solid metal helmet: grabcut, no regen
+    box: [520, 330, 90, 90]
+    matte: grabcut
+    erase: []
+    regen: false
+    target: 256
+    use: HeroHub

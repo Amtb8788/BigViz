@@ -1,0 +1,71 @@
+# BigViz spec, version 1. Every key is validated: unknown keys are errors.
+# Docs: https://github.com/Amtb8788/BigViz/blob/main/docs/ARCHITECTURE.md
+version: 1
+
+meta:
+  slug: {{slug}}                 # kebab-case, used in file names
+  title: {{title}}
+  project: Demo Project          # shown top-left on the screen
+  locale: {{locale}}                     # en | zh (language of on-screen text)
+  canvas: { width: 1920, height: 1080 }
+
+style:
+  preset: {{preset}}         # deep-tech-blue | editorial-dark | aurora-glass | ./my-preset.yaml
+  palette: {}                    # overrides, e.g. { primary: "#1E7BFF", accent: "#3FD0FF" }
+  fonts: {}                      # overrides, e.g. { number: "'DIN Alternate', sans-serif" }
+
+layout:
+  columns: [24, 52, 24]          # left / center / right width in percent
+  header: { clock: true, weather: false }
+  bottom_nav: false              # true = the mockup may show a bottom navigation bar
+
+# Order = reading order. column: left | center | right
+# type: line | bar | pie | ring | rank | podium | kpi | table | custom
+panels:
+  - id: trend
+    column: left
+    title: Monthly Trend
+    type: line
+    data:
+      x: [Jan, Feb, Mar, Apr, May, Jun]
+      series:
+        - { name: Earned, values: [120, 132, 128, 150, 162, 175] }
+        - { name: Spent, values: [80, 95, 90, 104, 118, 121] }
+    notes: steady growth, highlight the last point
+  # - id: ranking
+  #   column: right
+  #   title: Team Ranking
+  #   type: rank
+  #   data:
+  #     items:
+  #       - { name: Team A, value: 4860, unit: pts }
+  #       - { name: Team B, value: 4512, unit: pts }
+
+hero:
+  concept: shield                # key of `variants`, or free text
+  variants:
+    shield: a large 3D glass shield with a glowing check mark above a holographic pedestal
+    # core: a glowing data core sphere wrapped in orbit rings
+  nodes: []
+  # nodes:
+  #   - { label: Participants, icon: helmet, value: 3846, unit: people }
+
+kpis: []
+# kpis:
+#   - { label: Total Users, value: 12860, unit: people, icon: users, delta: "+3.2% MoM" }
+
+pitfalls: []                     # exact strings the image model tends to garble
+
+design:
+  versions: []                   # e.g. - { tag: v1, note: first style shoot-out }
+  final: null                    # e.g. designs/{{slug}}-v1-gpt-image-1.png
+
+assets: []
+# assets:                        # boxes are pixels of design.final: [x, y, w, h]
+#   - id: center-hub
+#     box: [640, 350, 375, 340]
+#     matte: unscreen            # none | unscreen | black | grabcut
+#     erase: []                  # boxes of baked-in text to inpaint first
+#     regen: { subject: "3D glowing shield on a holographic pedestal", fill: 0.85 }
+#     target: 1000               # longest edge of the final PNG
+#     use: CenterHub             # consuming component (documentation only)
