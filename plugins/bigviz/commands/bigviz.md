@@ -13,5 +13,9 @@ Input: $ARGUMENTS
 - If the input is empty, inspect the project (`bigviz/*/bigviz.yaml`, `design.final`,
   `assets/final/`, published `assets.manifest.ts`) and propose the entry phase.
 
-Run `bigviz doctor` first. Ask the user at every decision point (style, hero, final mockup,
-panel refine). Never start dev servers yourself.
+- If the input mentions 比稿, A/B, 精修 or studio, use studio mode; otherwise use quick mode
+  (2–3 user turns, see the `bigviz` skill).
+
+Run `bigviz doctor` first. In studio mode, ask the user at every decision point (style, hero,
+final mockup, panel refine); in quick mode, decide and show your pick. Never start dev
+servers yourself.

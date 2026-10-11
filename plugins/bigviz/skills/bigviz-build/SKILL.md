@@ -54,11 +54,24 @@ palette); never hard-code colours.
 - Front effect layers using `mix-blend-mode`: never animate the layer's `opacity` as a whole;
   it isolates the blend. Animate children instead.
 
-### 6. Embedding in a host admin layout
+### 6. 3D hero (`hero.mode: three`)
+- Use `CityHero` from the template's `src/screen3d/` kit as a full-bleed layer behind the
+  panels; `views/City/` is the reference. Copy the whole `screen3d/` folder and add `three`
+  at the template's pinned version. Never import three statically from a 2D view.
+- Map `hero.nodes` and alert-like panel rows to `alerts` (`x`, `z` in -1..1); pass
+  `hero.seed` as `seed`. Clicking a list row calls `flyTo(id)`.
+- Pass the published hero image (if any) as `fallback`; it shows when WebGL fails.
+- Side panels over the city get a translucent glass background so the scene shows through;
+  keep the centre column free of panels so clicks reach the canvas.
+- Rules the kit already enforces, do not undo them: pixel ratio capped at 2, loop paused
+  when hidden, one still frame under reduced motion, full dispose on unmount.
+- Details: `docs/guide-3d.md` in the BigViz repo.
+
+### 7. Embedding in a host admin layout
 Inspect the wrapper chain for `height: calc(100vh - …)`, `overflow: hidden`, padding or
 `min-height` rules. Give the screen route a full-bleed layout or a scoped override.
 
-### 7. Verify
+### 8. Verify
 Run the project's typecheck and lint (template: `npm run typecheck`). Do not start the dev
 server yourself; ask the user to start it, then hand off to `bigviz-qa`.
 
