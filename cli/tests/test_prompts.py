@@ -66,3 +66,50 @@ def test_format_data_shapes():
     assert P.format_data([1, 2]) == ["- 1", "- 2"]
     lines = P.format_data({"total": 10935, "items": [{"name": "A", "value": 1.5}]})
     assert "total: 10,935" in lines and "1  A  1.5" in lines
+
+
+IMAGE_LAYOUT_HERO = (
+    'Center hero visual (focal point of the whole screen, no text on it): a glowing 3D glass shield.\n'
+    '- hero node (3D helmet icon, label "Safety Check"): 3,846 people\n'
+    'Left column, top to bottom:'
+)
+
+
+def test_image_mode_prompt_unchanged(spec):
+    text = P.design_prompt(spec)
+    assert IMAGE_LAYOUT_HERO in text  # golden: same as before hero.mode existed
+    spec.data["hero"]["mode"] = "image"  # explicit default renders identically
+    assert P.design_prompt(spec) == text
+    assert "digital-twin" not in text and "pedestal or single hero object" not in text
+
+
+def _three(spec, locale="en"):
+    spec.data["meta"]["locale"] = locale
+    spec.data["hero"]["mode"] = "three"
+    return P.design_prompt(spec)
+
+
+def test_three_mode_prompt_describes_city_en(spec):
+    text = _three(spec)
+    for s in ("night-time 3D digital-twin city", "high oblique aerial angle", "height gradient",
+              "scan ring", "light trails", "alert light pillars", "no pedestal"):
+        assert s in text
+    pal = spec.palette
+    assert f"primary {pal['primary']} (low) to accent {pal['accent']}" in text
+    assert "a glowing 3D glass shield" not in text  # concept/variants ignored
+    assert '- hero node (3D helmet icon, label "Safety Check"): 3,846 people' in text
+    assert "pedestal or single hero object in the center" in text.split("## Avoid")[1]
+
+
+def test_three_mode_prompt_describes_city_zh(spec):
+    text = _three(spec, "zh")
+    for s in ("夜景 3D 数字孪生城市", "高空斜俯视角", "扫描光环", "光轨", "告警光柱"):
+        assert s in text
+    assert f"主色 {spec.palette['primary']}" in text and "Simplified Chinese" in text
+    assert "night-time 3D digital-twin city" not in text
+
+
+def test_three_mode_refuses_hero_ab(spec):
+    spec.data["hero"]["mode"] = "three"
+    with pytest.raises(ValueError, match="hero.mode: image"):
+        P.design_prompt(spec, hero="core")

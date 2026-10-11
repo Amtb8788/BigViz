@@ -32,8 +32,8 @@ bigviz/
 │   └── tests/                             # matte regression on synthetic images
 ├── templates/vue3-echarts/                # standalone Vite + Vue 3 + TS + ECharts screen
 ├── examples/safety-points/                # anonymised end-to-end example (spec + screenshots)
-├── docs/                                  # ARCHITECTURE.md (this), guides
-├── README.md, README.zh-CN.md, LICENSE (MIT), CONTRIBUTING.md
+├── docs/                                  # README.md (index), ARCHITECTURE.md (this), guides
+├── README.md, README.zh-CN.md, LICENSE (MIT), CONTRIBUTING.md, CHANGELOG.md, SECURITY.md
 └── .github/workflows/ci.yml
 ```
 
@@ -110,6 +110,9 @@ panels:                          # order = reading order; column: left|center|ri
     data: { x: [Mon, Tue], series: [{ name: Earned, values: [120, 98] }] }
     notes: optional free text for the designer prompt
 hero:                            # center visual
+  mode: image                    # image (default) | three: live three.js scene, no hero asset; concept/variants ignored
+  scene: city                    # three mode: procedural digital-twin city (only `city` for now)
+  seed: 1                        # three mode: int >= 0, deterministic procedural layout
   concept: shield                # free text; variants below for A/B
   variants: { shield: "...", core: "...", badge: "..." }
   nodes: [{ label: Safety Check, icon: helmet }]
@@ -163,6 +166,7 @@ Ship at least: `deep-tech-blue` (default, CN command-center style), `editorial-d
   `ScreenPanel.vue`, `ScreenChart.vue` (devicePixelRatio = zoom × DPR, rounded 0.5, max 4),
   `RankList.vue`, `CountUp.vue`, `KpiCards.vue`, `HeroHub.vue`, `motion.ts`
   (`ENTRANCE` timeline, `useVisibleInterval`, `useReducedMotion`).
+- Optional `src/screen3d/` kit for `hero.mode: three`: `CityHero` (three.js lazy-loaded), demo route `#/city`.
 - `src/views/Example/` consumes `assets.manifest.ts` + `src/mock/example.json`.
 - Theme tokens are CSS custom properties generated from the spec palette (`src/screen/theme.css`).
 - Only animate `transform` / `opacity`; every looped effect has a reduced-motion fallback.

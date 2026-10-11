@@ -94,3 +94,33 @@ def test_init_starter_is_valid(tmp_path):
         init_workspace(tmp_path, "my-screen")
     with pytest.raises(SpecError):
         init_workspace(tmp_path, "Bad Slug")
+
+
+def test_hero_defaults_to_image(spec):
+    h = spec["hero"]
+    assert (h["mode"], h["scene"], h["seed"]) == ("image", "city", 1)
+    assert spec.hero_is_3d is False
+
+
+def test_hero_three_mode_loads_with_defaults(spec_data):
+    spec_data["hero"] = {"mode": "three"}
+    h = validate(spec_data, check_files=False)["hero"]
+    assert h == {"mode": "three", "scene": "city", "seed": 1, "concept": "",
+                 "variants": {}, "nodes": []}
+    spec_data["hero"]["seed"] = 0
+    assert validate(spec_data, check_files=False)["hero"]["seed"] == 0
+
+
+@pytest.mark.parametrize("key, value, needle", [
+    ("mode", "webgl", "must be one of image, three"),
+    ("scene", "forest", "must be one of city"),
+    ("seed", -1, "must be >= 0"),
+    ("seed", 1.5, "expected integer"),
+    ("seed", True, "expected integer, got boolean"),
+    ("orbit", 1, "unknown key"),
+])
+def test_hero_three_mode_errors(spec_data, key, value, needle):
+    spec_data["hero"].update({"mode": "three", key: value})
+    with pytest.raises(SpecError) as e:
+        validate(spec_data, check_files=False)
+    assert any(err.startswith(f"spec.hero.{key}:") and needle in err for err in e.value.errors)

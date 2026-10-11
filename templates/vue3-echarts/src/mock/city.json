@@ -1,0 +1,42 @@
+{
+  "project": "Metro Twin Demo",
+  "kpis": [
+    { "id": "health", "value": 92.6, "delta": 1.4 },
+    { "id": "sensors", "value": 48216, "delta": 0.8 },
+    { "id": "speed", "value": 34.8, "delta": -3.1 },
+    { "id": "gridLoad", "value": 76.2, "delta": 2.5 }
+  ],
+  "alerts": [
+    { "id": "a1", "type": "traffic", "level": "critical", "place": "North Ring Rd", "x": -0.18, "z": -0.42, "value": 23, "unit": "min", "time": "09:42" },
+    { "id": "a2", "type": "power", "level": "warn", "place": "District C Substation", "x": 0.46, "z": -0.12, "value": 94, "unit": "%", "time": "09:37" },
+    { "id": "a3", "type": "fire", "level": "critical", "place": "Harbor Logistics Park", "x": -0.55, "z": 0.28, "value": 2, "unit": "lvl", "time": "09:31" },
+    { "id": "a4", "type": "water", "level": "warn", "place": "District E Main", "x": 0.2, "z": 0.55, "value": 0.21, "unit": "MPa", "time": "09:24" },
+    { "id": "a5", "type": "air", "level": "info", "place": "Riverside Park", "x": 0.05, "z": -0.05, "value": 68, "unit": "AQI", "time": "09:18" },
+    { "id": "a6", "type": "crowd", "level": "warn", "place": "Central Plaza", "x": -0.08, "z": 0.18, "value": 4.6, "unit": "/m²", "time": "09:12" },
+    { "id": "a7", "type": "parking", "level": "info", "place": "District B Hub", "x": 0.62, "z": 0.3, "value": 97, "unit": "%", "time": "09:05" },
+    { "id": "a8", "type": "power", "level": "info", "place": "East Gate Grid", "x": -0.4, "z": -0.66, "value": 81, "unit": "%", "time": "08:58" }
+  ],
+  "levels": { "info": 126, "warn": 41, "critical": 9 },
+  "trend": {
+    "hours": ["00:00", "02:00", "04:00", "06:00", "08:00", "10:00", "12:00", "14:00", "16:00", "18:00", "20:00", "22:00"],
+    "energy": [612, 548, 521, 588, 742, 816, 864, 842, 856, 928, 884, 726],
+    "traffic": [18, 9, 7, 26, 88, 64, 58, 61, 72, 94, 56, 31]
+  },
+  "districts": [
+    { "name": "District A", "load": 82 },
+    { "name": "District B", "load": 67 },
+    { "name": "District C", "load": 94 },
+    { "name": "District D", "load": 58 },
+    { "name": "District E", "load": 73 },
+    { "name": "District F", "load": 45 }
+  ],
+  "roads": [
+    { "name": "North Ring Rd", "delay": 23 },
+    { "name": "Harbor Expressway", "delay": 19 },
+    { "name": "Central Ave", "delay": 16 },
+    { "name": "East Bridge", "delay": 14 },
+    { "name": "Station Blvd", "delay": 11 },
+    { "name": "West Loop", "delay": 9 },
+    { "name": "Airport Link", "delay": 7 }
+  ]
+}

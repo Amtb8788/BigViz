@@ -37,7 +37,10 @@ panels:                          # order = reading order
     notes: optional free text for the designer prompt
 
 hero:                            # the center visual
-  concept: shield                # key into variants, or free text
+  mode: image                    # image (default): hero art cut from the mockup | three: live 3D scene
+  scene: city                    # three mode: procedural digital-twin city (only `city` for now)
+  seed: 1                        # three mode: int >= 0, deterministic procedural layout
+  concept: shield                # key into variants, or free text (image mode only)
   variants:                      # 2-3 concepts for the hero A/B
     shield: "..."
     core: "..."
@@ -92,6 +95,13 @@ assets:                          # cut list; units = pixels of design.final
 - `concept` selects the default variant; `bigviz prompt design --hero <key>` swaps only the
   hero section for an A/B.
 - `nodes` are the orbiting labels; keep labels short.
+- `mode: three` replaces the hero art with a live three.js scene. The design prompt then describes
+  the center as a night-time digital-twin city from a high oblique angle (buildings with a
+  primary-to-accent height gradient, an expanding scan ring, road light trails, a few alert light
+  pillars) and asks for no pedestal, so the mockup matches the page. `concept` and `variants` are
+  ignored and `--hero` is an error; `nodes` are still listed as overlay labels. No hero asset is
+  needed in `assets`.
+- `scene` picks the procedural scene (`city` only). `seed` fixes the layout: same seed, same city.
 
 ### pitfalls
 List strings that are long, CJK, masked (`Liu*Qiang`), near-duplicates, units, dates.

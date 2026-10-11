@@ -170,7 +170,9 @@ const vars = computed(() => ({ '--delay': `${props.delay}s`, '--done': `${ENTRAN
 
 .bv-panel__title {
   position: relative;
+  flex-shrink: 0;
   margin: 0;
+  white-space: nowrap;
   font-size: 19px;
   font-weight: 700;
   color: var(--bv-text);
@@ -183,6 +185,8 @@ const vars = computed(() => ({ '--delay': `${props.delay}s`, '--done': `${ENTRAN
   position: relative;
   display: flex;
   gap: 16px;
+  min-width: 0;
+  margin-left: 12px;
   align-items: center;
   font-size: 14px;
   color: var(--bv-text-dim);

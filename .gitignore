@@ -45,3 +45,6 @@ examples/*/backup/
 # Playwright
 playwright-report/
 test-results/
+
+# Local scratch (screenshots, one-off scripts)
+.tmp-shots/

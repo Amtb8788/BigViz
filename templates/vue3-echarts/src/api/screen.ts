@@ -6,6 +6,7 @@
 import { onMounted, ref, shallowRef } from 'vue'
 import { useVisibleInterval } from '@/screen/motion'
 import type { ExampleScreenData, KpiId } from '@/views/Example/types'
+import { ShapeError, arr, num, obj, str } from './validate'
 
 /** Request timeout (ms) */
 const TIMEOUT = 10_000
@@ -15,34 +16,7 @@ export const REFRESH_INTERVAL = 60_000
 /** Endpoint: `VITE_API_URL` if set, else the bundled mock next to the app (works under any base) */
 export const SCREEN_URL = import.meta.env.VITE_API_URL || `${import.meta.env.BASE_URL}mock/example.json`
 
-// ─── Boundary validation ──────────────────────────────────────────────────────
-
-class ShapeError extends Error {
-  constructor(path: string, expected: string) {
-    super(`Invalid screen data at "${path}": expected ${expected}`)
-    this.name = 'ShapeError'
-  }
-}
-
-type Obj = Record<string, unknown>
-const isObj = (v: unknown): v is Obj => typeof v === 'object' && v !== null && !Array.isArray(v)
-
-const obj = (v: unknown, path: string): Obj => {
-  if (!isObj(v)) throw new ShapeError(path, 'object')
-  return v
-}
-const num = (v: unknown, path: string): number => {
-  if (typeof v !== 'number' || !Number.isFinite(v)) throw new ShapeError(path, 'finite number')
-  return v
-}
-const str = (v: unknown, path: string, max = 200): string => {
-  if (typeof v !== 'string' || v.length > max) throw new ShapeError(path, `string ≤ ${max} chars`)
-  return v
-}
-const arr = <T>(v: unknown, path: string, item: (x: unknown, p: string) => T, max = 500): T[] => {
-  if (!Array.isArray(v) || v.length > max) throw new ShapeError(path, `array ≤ ${max} items`)
-  return v.map((x, i) => item(x, `${path}[${i}]`))
-}
+// ─── Boundary validation (helpers in ./validate) ──────────────────────────────
 
 const KPI_IDS: readonly KpiId[] = ['users', 'pointsRedeemed', 'redemptions', 'itemsRedeemed']
 const kpiId = (v: unknown, path: string): KpiId => {

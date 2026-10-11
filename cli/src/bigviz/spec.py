@@ -21,6 +21,8 @@ PALETTE_KEYS = ("bg0", "bg1", "primary", "accent", "warn", "ok", "violet", "text
 FONT_KEYS = ("ui", "number")
 PANEL_TYPES = ("line", "bar", "pie", "ring", "rank", "podium", "kpi", "table", "custom")
 MATTE_METHODS = ("none", "unscreen", "black", "grabcut")
+HERO_MODES = ("image", "three")  # image: generated hero art; three: live three.js scene
+HERO_SCENES = ("city",)  # procedural scenes available in three mode
 WORKSPACE_DIRS = (
     "prompts", "designs", "assets/placeholder", "assets/alpha",
     "assets/regen", "assets/final", "shots", "backup",
@@ -127,6 +129,10 @@ def _positive(v: Any) -> str | None:
     return None if v is None or v > 0 else "must be > 0"
 
 
+def _non_negative(v: Any) -> str | None:
+    return None if v >= 0 else "must be >= 0"
+
+
 def _fill(v: Any) -> str | None:
     return None if 0.1 <= v <= 1.0 else "must be between 0.1 and 1.0"
 
@@ -182,6 +188,9 @@ SPEC_SCHEMA: dict[str, F] = {
         "notes": F(STR, default=""),
     })),
     "hero": F((dict,), fields={
+        "mode": F(STR, default="image", check=_one_of(*HERO_MODES)),
+        "scene": F(STR, default="city", check=_one_of(*HERO_SCENES)),
+        "seed": F((int,), default=1, check=_non_negative),
         "concept": F(STR, default=""),
         "variants": F((dict,), default=dict, values=F(STR)),
         "nodes": F((list,), default=list, item=F((dict,), fields={
@@ -266,6 +275,11 @@ class Spec:
         d = self.workspace / name
         d.mkdir(parents=True, exist_ok=True)
         return d
+
+    @property
+    def hero_is_3d(self) -> bool:
+        """True when the hero is rendered live by three.js (`hero.mode: three`), not cut from the mockup."""
+        return self.data["hero"]["mode"] == "three"
 
     @property
     def final_design(self) -> Path | None:

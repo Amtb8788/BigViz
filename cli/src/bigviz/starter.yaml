@@ -42,7 +42,10 @@ panels:
   #       - { name: Team B, value: 4512, unit: pts }
 
 hero:
-  concept: shield                # key of `variants`, or free text
+  # mode: three                  # image (default): hero art cut from the mockup | three: live three.js scene
+  # scene: city                  # three mode only: procedural digital-twin city (the only scene for now)
+  # seed: 7                      # three mode only: int >= 0, deterministic layout (default 1)
+  concept: shield                # key of `variants`, or free text (ignored when mode: three)
   variants:
     shield: a large 3D glass shield with a glowing check mark above a holographic pedestal
     # core: a glowing data core sphere wrapped in orbit rings

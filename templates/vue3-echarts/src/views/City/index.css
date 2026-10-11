@@ -1,0 +1,241 @@
+/* City screen layout. Scoped to index.vue. */
+
+/* The screen owns the whole viewport; BigScreen fills this wrapper */
+.ct-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+}
+
+.ct-screen :deep(.bv-stage) {
+  background: var(--bv-bg0);
+}
+
+.ct-hero {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+/* Darkens the edges behind the side panels and header; centre stays untouched */
+.ct-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--bv-bg0) 70%, transparent) 0, transparent 28%, transparent 72%, color-mix(in srgb, var(--bv-bg0) 70%, transparent) 100%),
+    linear-gradient(180deg, color-mix(in srgb, var(--bv-bg0) 75%, transparent) 0, transparent 22%, transparent 82%, color-mix(in srgb, var(--bv-bg0) 60%, transparent) 100%);
+}
+
+/* UI layers above the canvas; only real controls catch the pointer */
+.ct-layer {
+  position: relative;
+  z-index: 2;
+}
+
+.ct-main {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 450px 1fr 450px;
+  gap: 24px;
+  height: calc(100% - 90px);
+  padding: 12px 20px 20px;
+  pointer-events: none;
+}
+
+.ct-col {
+  display: grid;
+  gap: var(--bv-gap);
+  min-width: 0;
+  min-height: 0;
+}
+
+.ct-col--left,
+.ct-col--right {
+  pointer-events: auto;
+}
+
+.ct-col--left {
+  grid-template-rows: 1.45fr 1fr;
+}
+
+.ct-col--right {
+  grid-template-rows: 0.9fr 1fr 1.1fr;
+}
+
+/* Glass panels: translucent so the city shows through, blurred so text stays legible */
+.ct-main :deep(.bv-panel) {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--bv-panel-top) 62%, transparent),
+    color-mix(in srgb, var(--bv-panel-bottom) 52%, transparent)
+  );
+  backdrop-filter: blur(10px) saturate(1.3);
+}
+
+/* Title and a two-entry legend do not fit one 450px row: stack the legend so the title stays on one line */
+.ct-trend :deep(.bv-panel__extra) {
+  flex-direction: column;
+  gap: 2px;
+  align-items: flex-start;
+  font-size: 12px;
+  line-height: 1.25;
+}
+
+/* Road names are long ("Harbor Expressway"); the bars give up the width */
+.ct-roads {
+  --bv-rank-label: 168px;
+}
+
+.ct-col--center {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 0;
+}
+
+.ct-kpis {
+  flex-shrink: 0;
+  height: 104px;
+}
+
+.ct-kpis :deep(.bv-kpi) {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--bv-panel-top) 55%, transparent),
+    color-mix(in srgb, var(--bv-panel-bottom) 45%, transparent)
+  );
+  backdrop-filter: blur(8px);
+}
+
+/* Beacon legend + hint along the bottom of the centre column */
+.ct-hint {
+  display: flex;
+  gap: 22px;
+  align-items: center;
+  align-self: center;
+  padding: 8px 20px;
+  margin: 0;
+  font-size: 15px;
+  color: var(--bv-text-dim);
+  background: color-mix(in srgb, var(--bv-bg0) 55%, transparent);
+  border: 1px solid var(--bv-line-soft);
+  border-radius: 20px;
+}
+
+.ct-hint__lvl {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  color: var(--bv-text);
+}
+
+.ct-hint__lvl i {
+  width: 4px;
+  height: 16px;
+  background: var(--lvl);
+  border-radius: 2px;
+  box-shadow: 0 0 8px var(--lvl);
+}
+
+.ct-hint__lvl.is-info {
+  --lvl: var(--bv-ok);
+}
+
+.ct-hint__lvl.is-warn {
+  --lvl: var(--bv-warn);
+}
+
+.ct-hint__lvl.is-critical {
+  --lvl: var(--bv-danger, #ff4d5e);
+}
+
+.ct-hint__text {
+  padding-left: 18px;
+  border-left: 1px solid var(--bv-line);
+}
+
+.ct-live {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  font-family: var(--bv-font-number);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--bv-danger, #ff4d5e);
+  letter-spacing: 1px;
+}
+
+.ct-live i {
+  width: 8px;
+  height: 8px;
+  background: currentcolor;
+  border-radius: 50%;
+  animation: ct-blink 1.6s ease-in-out infinite;
+}
+
+.ct-legend {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.ct-legend i {
+  display: inline-block;
+  width: 18px;
+  height: 3px;
+  border-radius: 2px;
+}
+
+.ct-legend .is-energy {
+  background: var(--bv-accent);
+}
+
+.ct-legend .is-traffic {
+  background: var(--bv-violet);
+}
+
+.ct-state {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+  justify-content: center;
+  height: calc(100% - 90px);
+  font-size: 20px;
+  color: var(--bv-text-dim);
+}
+
+.ct-state p {
+  margin: 0;
+}
+
+.ct-retry {
+  padding: 8px 24px;
+  font: inherit;
+  font-size: 16px;
+  color: var(--bv-text);
+  cursor: pointer;
+  background: var(--bv-primary);
+  border: none;
+  border-radius: 4px;
+}
+
+.ct-retry:focus-visible {
+  outline: 2px solid var(--bv-accent);
+  outline-offset: 2px;
+}
+
+@keyframes ct-blink {
+  50% {
+    opacity: 0.3;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ct-live i {
+    animation: none;
+  }
+}

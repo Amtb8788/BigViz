@@ -5,6 +5,11 @@ visual system (palette hex + panel style), typography (marked most important),
 layout (every panel with its exact data), on-screen text, pitfalls, avoid.
 Section headings and instructions are English; on-screen text and the
 locale-sensitive preset fragments follow `meta.locale`.
+
+With `hero.mode: three` the center hero line describes the procedural 3D scene
+(`HERO_3D_SCENES[hero.scene]`, coloured from the palette) instead of
+`hero.concept` / `hero.variants`, which are ignored; `--hero` A/B is refused.
+Hero nodes are still listed (they become overlay labels on the scene).
 """
 
 from __future__ import annotations
@@ -38,6 +43,33 @@ TEXT_RULE = (
     "Every word and number on screen must match the text in this prompt character for "
     "character: crisp, legible, no garbled glyphs, no typos. Do not add any paragraph text "
     "that is not listed here."
+)
+
+
+# `hero.mode: three` - the centre is a live three.js scene; the mockup must show what it renders.
+HERO_3D_SCENES = {
+    "city": {
+        "en": (
+            "a night-time 3D digital-twin city seen from a high oblique aerial angle, filling the "
+            "center column: a dense grid of extruded glowing buildings whose colour follows a height "
+            "gradient from primary {primary} (low) to accent {accent} (tallest towers), thin bright "
+            "edge lines on the roofs; one expanding circular scan ring sweeping outward across the "
+            "city; fast light trails streaking along the roads; a few vertical alert light pillars "
+            "in {warn}, {ok} and {violet} rising from individual blocks; a dark ground grid fading "
+            "into fog at the edges"
+        ),
+        "zh": (
+            "夜景 3D 数字孪生城市，高空斜俯视角，铺满中间列：密集网格排列的发光立体楼宇，"
+            "颜色按楼高从主色 {primary}（低矮）渐变到强调色 {accent}（最高楼），楼顶勾勒细亮边线；"
+            "一道圆形扫描光环自中心向外扩散扫过城市；道路上有高速流动的光轨拖尾；"
+            "少量 {warn}、{ok}、{violet} 色的竖直告警光柱从个别街区升起；"
+            "深色地面网格，边缘渐隐入雾中"
+        ),
+    },
+}
+HERO_3D_RULE = (
+    "The center is a live 3D scene, not a single hero object: no pedestal, no platform, no podium, "
+    "no floating centerpiece; ignore any hero or pedestal guidance above."
 )
 
 
@@ -105,8 +137,14 @@ def _q(s: str) -> str:
     return f'"{s}"'
 
 
-def _hero_text(spec: Spec, hero: str | None) -> str:
+def _hero_text(spec: Spec, hero: str | None, palette: dict[str, str]) -> str:
     h = spec["hero"]
+    if spec.hero_is_3d:
+        # concept/variants describe generated hero art; a live scene has none, so A/B is refused
+        if hero:
+            raise ValueError(f"--hero '{hero}': hero A/B needs hero.mode: image "
+                             f"(hero.mode is three, the center is the '{h['scene']}' scene)")
+        return localised(HERO_3D_SCENES[h["scene"]], spec.locale).format(**palette)
     key = hero or h["concept"]
     if hero and hero not in h["variants"]:
         raise KeyError(f"hero variant '{hero}' not in spec.hero.variants "
@@ -114,7 +152,7 @@ def _hero_text(spec: Spec, hero: str | None) -> str:
     return h["variants"].get(key, key)
 
 
-def _layout(spec: Spec, hero: str | None) -> list[str]:
+def _layout(spec: Spec, hero: str | None, palette: dict[str, str]) -> list[str]:
     meta, layout = spec["meta"], spec["layout"]
     cols = layout["columns"]
     names = ["left", "center", "right"] if len(cols) == 3 else [f"column {i + 1}" for i in range(len(cols))]
@@ -134,9 +172,11 @@ def _layout(spec: Spec, hero: str | None) -> list[str]:
             unit = f" {k['unit']}" if k["unit"] else ""
             delta = f" | {k['delta']}" if k["delta"] else ""
             out.append(f"- {icon}{_q(k['label'])} | {fmt(k['value'])}{unit}{delta}")
-    hero_text = _hero_text(spec, hero)
+    hero_text = _hero_text(spec, hero, palette)
     if hero_text:
         out.append(f"Center hero visual (focal point of the whole screen, no text on it): {hero_text}.")
+        if spec.hero_is_3d:
+            out.append(HERO_3D_RULE)
         for n in spec["hero"]["nodes"]:
             icon = f"3D {n['icon']} icon, " if n["icon"] else ""
             val = f": {fmt(n['value'])}{(' ' + n['unit']) if n['unit'] else ''}" if n["value"] is not None else ""
@@ -171,14 +211,15 @@ def design_prompt(spec: Spec, variant: str | None = None, hero: str | None = Non
         "## Visual system\nPalette (use these exact hex colours):\n" + pal + "\n"
         + localised(p["panel"], loc) + f"\nFonts: UI text {fonts['ui']}; numbers {fonts['number']}.",
         "## Typography (MOST IMPORTANT)\n" + localised(p["typography"], loc) + "\n" + TEXT_LANG[loc],
-        "## Layout\n" + "\n".join(_layout(spec, hero)),
+        "## Layout\n" + "\n".join(_layout(spec, hero, palette)),
         "## On-screen text\n" + TEXT_RULE,
     ]
     if spec["pitfalls"]:
         sections.append("## Pitfalls (render these strings exactly, glyph by glyph)\n"
                         + "\n".join(f"- {_q(s)}" for s in spec["pitfalls"]))
     sections.append("## Avoid\n" + localised(p["avoid"], loc) + "; monitor or mock-up frame"
-                    + ("" if spec["layout"]["bottom_nav"] else "; bottom navigation bar"))
+                    + ("" if spec["layout"]["bottom_nav"] else "; bottom navigation bar")
+                    + ("; pedestal or single hero object in the center" if spec.hero_is_3d else ""))
     return "\n\n".join(sections) + "\n"
 
 

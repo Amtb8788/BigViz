@@ -48,7 +48,11 @@ export default defineConfig({
     chunkSizeWarningLimit: 900,
     rollupOptions: {
       output: {
-        manualChunks: { echarts: ['echarts/core', 'echarts/charts', 'echarts/components', 'echarts/renderers'] }
+        manualChunks: {
+          echarts: ['echarts/core', 'echarts/charts', 'echarts/components', 'echarts/renderers'],
+          // Only the lazily loaded CityCanvas imports three, so this chunk loads on #/city only
+          three: ['three']
+        }
       }
     }
   }
