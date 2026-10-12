@@ -19,10 +19,15 @@
 
 [在线演示](https://amtb8788.github.io/BigViz/) ·
 [3D 城市演示](https://amtb8788.github.io/BigViz/#/city) ·
+[演示视频](docs/media/bigviz-promo.mp4) ·
 [使用手册](docs/USAGE.zh-CN.md) ·
 [文档](docs/README.md)
 
 </div>
+
+[![38 秒看懂 BigViz：点击播放宣传视频](docs/media/bigviz-promo-poster.jpg)](docs/media/bigviz-promo.mp4)
+
+<p align="center"><sub>38 秒看懂 BigViz，点击播放。</sub></p>
 
 ![智慧城市运营中心：基于 BigViz 模板的 three.js 实时 3D 数字孪生城市](docs/media/showcase-3d-city.png)
 
