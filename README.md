@@ -25,7 +25,7 @@ digital-twin city, and a real Vue 3 + ECharts codebase you actually ship.**
 
 </div>
 
-[![BigViz in 38 seconds: watch the promo video](docs/media/bigviz-promo-poster.jpg)](https://amtb8788.github.io/BigViz/promo/)
+https://github.com/user-attachments/assets/06304dd5-e521-4724-bcea-e3051eae04b8
 
 <p align="center"><sub>BigViz in 38 seconds. Click to play.</sub></p>
 
