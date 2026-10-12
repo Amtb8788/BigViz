@@ -19,13 +19,13 @@
 
 [在线演示](https://amtb8788.github.io/BigViz/) ·
 [3D 城市演示](https://amtb8788.github.io/BigViz/#/city) ·
-[演示视频](docs/media/bigviz-promo.mp4) ·
+[演示视频](https://amtb8788.github.io/BigViz/promo/) ·
 [使用手册](docs/USAGE.zh-CN.md) ·
 [文档](docs/README.md)
 
 </div>
 
-[![38 秒看懂 BigViz：点击播放宣传视频](docs/media/bigviz-promo-poster.jpg)](docs/media/bigviz-promo.mp4)
+[![38 秒看懂 BigViz：点击播放宣传视频](docs/media/bigviz-promo-poster.jpg)](https://amtb8788.github.io/BigViz/promo/)
 
 <p align="center"><sub>38 秒看懂 BigViz，点击播放。</sub></p>
 

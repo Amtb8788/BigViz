@@ -19,13 +19,13 @@ digital-twin city, and a real Vue 3 + ECharts codebase you actually ship.**
 
 [Live demo](https://amtb8788.github.io/BigViz/) ·
 [3D city demo](https://amtb8788.github.io/BigViz/#/city) ·
-[Demo video](docs/media/bigviz-promo.mp4) ·
+[Demo video](https://amtb8788.github.io/BigViz/promo/) ·
 [Usage guide](docs/USAGE.md) ·
 [Docs](docs/README.md)
 
 </div>
 
-[![BigViz in 38 seconds: watch the promo video](docs/media/bigviz-promo-poster.jpg)](docs/media/bigviz-promo.mp4)
+[![BigViz in 38 seconds: watch the promo video](docs/media/bigviz-promo-poster.jpg)](https://amtb8788.github.io/BigViz/promo/)
 
 <p align="center"><sub>BigViz in 38 seconds. Click to play.</sub></p>
 

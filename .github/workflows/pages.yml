@@ -10,6 +10,7 @@ on:
     branches: [main]
     paths:
       - templates/vue3-echarts/**
+      - docs/media/**
       - .github/workflows/pages.yml
   workflow_dispatch:
 
@@ -37,6 +38,12 @@ jobs:
           cache-dependency-path: templates/vue3-echarts/package-lock.json
       - run: npm ci
       - run: npm run build
+      # Promo video player: https://amtb8788.github.io/BigViz/promo/
+      - name: Add promo video page
+        run: |
+          mkdir -p dist/promo
+          cp ../../docs/media/promo.html dist/promo/index.html
+          cp ../../docs/media/bigviz-promo.mp4 ../../docs/media/bigviz-promo-poster.jpg dist/promo/
       - uses: actions/upload-pages-artifact@v3
         with:
           path: templates/vue3-echarts/dist
