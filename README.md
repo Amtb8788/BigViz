@@ -27,7 +27,7 @@ digital-twin city, and a real Vue 3 + ECharts codebase you actually ship.**
 
 https://github.com/user-attachments/assets/06304dd5-e521-4724-bcea-e3051eae04b8
 
-<p align="center"><sub>BigViz in 38 seconds. Click to play.</sub></p>
+<p align="center"><sub>BigViz in 38 seconds.</sub></p>
 
 ![Smart City Operations Center: a live three.js digital-twin city with alert beacons, built from the BigViz template](docs/media/showcase-3d-city.png)
 

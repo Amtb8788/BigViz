@@ -25,9 +25,9 @@
 
 </div>
 
-[![38 秒看懂 BigViz：点击播放宣传视频](docs/media/bigviz-promo-poster.jpg)](https://amtb8788.github.io/BigViz/promo/)
+https://github.com/user-attachments/assets/06304dd5-e521-4724-bcea-e3051eae04b8
 
-<p align="center"><sub>38 秒看懂 BigViz，点击播放。</sub></p>
+<p align="center"><sub>38 秒看懂 BigViz。</sub></p>
 
 ![智慧城市运营中心：基于 BigViz 模板的 three.js 实时 3D 数字孪生城市](docs/media/showcase-3d-city.png)
 
