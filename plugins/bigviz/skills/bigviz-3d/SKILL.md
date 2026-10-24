@@ -149,3 +149,8 @@ Multi-agent split and BigViz integration (`TwinHero.vue` beside `CityHero.vue`):
 - Timeline jumps call `hooks.jump` and re-seat agents; reset any blackboard vars there.
 - Do not hard-code credentials, real intranet URLs or personal data in scenes.
 
+## Credits
+
+The scene-building method draws on the `living-diorama` skill in
+[joonsp/threejs-skills](https://github.com/joonsp/threejs-skills) (MIT). This engine was written
+separately for BigViz scenes and digital twins.

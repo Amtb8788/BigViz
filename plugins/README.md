@@ -20,6 +20,7 @@ Each skill is one role in a small dashboard studio:
 | `bigviz-assets` | Visual asset artist: cut, matte, HD regen, publish | `assets/final/` + manifest |
 | `bigviz-build` | Front-end developer: the Vue 3 page | `src/views/<Name>/` |
 | `bigviz-qa` | QA: screenshots, overlays, motion checks | `shots/` + checklist |
+| `bigviz-3d` | 3D scene engine: animated sites, factories, parks, streets, digital twins | scene pack + screenshots / video |
 
 Skills call the `bigviz` CLI in [`../cli`](../cli) and build on the template in
 [`../templates/vue3-echarts`](../templates/vue3-echarts).

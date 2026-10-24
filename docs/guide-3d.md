@@ -6,6 +6,17 @@ No 3D models or textures are needed, so every screen is licence-clean and works 
 
 Live demo: the template's `#/city` route (`npm run dev`, then open `/#/city`).
 
+## Two kinds of 3D
+
+| | `screen3d` (this guide) | `bigviz-3d` skill |
+|---|---|---|
+| What | Procedural night city as the screen's hero | Full scene engine: construction site, factory, park, street, tunnel, bridge |
+| Life | Alert beacons, camera tour | Workers, vehicles, traffic signals, progress over days, weather, IoT devices |
+| Where | `templates/vue3-echarts/src/screen3d/` | `plugins/bigviz/skills/bigviz-3d/assets/engine/` |
+| Use when | A dashboard needs a light 3D backdrop | The scene itself is the product (smart site, digital twin) |
+
+See [`bigviz-3d/SKILL.md`](../plugins/bigviz/skills/bigviz-3d/SKILL.md) for the engine.
+
 ## Turn it on
 
 ```yaml

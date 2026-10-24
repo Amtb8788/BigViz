@@ -8,6 +8,9 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 - 3D hero, phase 1: `src/screen3d/` kit in the Vue template (`ThreeStage`, `CityHero`, a
   procedural digital-twin city with alert beacons and camera tour), demo route `#/city`,
   spec fields `hero.mode` / `hero.scene` / `hero.seed`, `docs/guide-3d.md`.
+- `bigviz-3d` skill: three.js scene engine for animated construction sites, factories, parks,
+  streets, tunnels and bridges (agents, roads and signals, progress, weather, IoT devices),
+  with browser verify and video recording.
 - GitHub Pages workflow that publishes the template as a live demo.
 - Quick mode in the `bigviz` orchestrator: a first screen in 2–3 user turns. Studio mode
   keeps the full shoot-out / A/B / refine flow.

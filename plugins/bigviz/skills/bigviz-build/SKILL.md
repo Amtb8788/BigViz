@@ -66,6 +66,8 @@ palette); never hard-code colours.
 - Rules the kit already enforces, do not undo them: pixel ratio capped at 2, loop paused
   when hidden, one still frame under reduced motion, full dispose on unmount.
 - Details: `docs/guide-3d.md` in the BigViz repo.
+- For a full animated scene (construction site, factory, park, street, tunnel, bridge, with
+  workers, vehicles, progress and IoT devices) use the `bigviz-3d` skill instead of `CityHero`.
 
 ### 7. Embedding in a host admin layout
 Inspect the wrapper chain for `height: calc(100vh - …)`, `overflow: hidden`, padding or

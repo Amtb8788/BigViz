@@ -150,6 +150,7 @@ One brain, two toolboxes:
 | Assets | [`bigviz-assets`](plugins/bigviz/skills/bigviz-assets/SKILL.md) skill + CLI | transparent HD assets + manifest |
 | Front-end | [`bigviz-build`](plugins/bigviz/skills/bigviz-build/SKILL.md) skill + Vue 3 template | the running page |
 | QA | [`bigviz-qa`](plugins/bigviz/skills/bigviz-qa/SKILL.md) skill + CLI | screenshots, overlays, checklist |
+| 3D scenes | [`bigviz-3d`](plugins/bigviz/skills/bigviz-3d/SKILL.md) skill + three.js engine | animated sites, factories, parks, streets |
 | Orchestration | [`bigviz`](plugins/bigviz/skills/bigviz/SKILL.md) skill | phases, gates and your decisions |
 
 ```

@@ -145,6 +145,7 @@ flowchart LR
 | 素材 | [`bigviz-assets`](plugins/bigviz/skills/bigviz-assets/SKILL.md) 技能 + CLI | 透明高清素材 + 尺寸清单 |
 | 前端开发 | [`bigviz-build`](plugins/bigviz/skills/bigviz-build/SKILL.md) 技能 + Vue 3 模板 | 可运行页面 |
 | 测试验收 | [`bigviz-qa`](plugins/bigviz/skills/bigviz-qa/SKILL.md) 技能 + CLI | 截图、叠图、验收清单 |
+| 3D 场景 | [`bigviz-3d`](plugins/bigviz/skills/bigviz-3d/SKILL.md) 技能 + three.js 引擎 | 会动的工地、工厂、园区、街道 |
 | 总调度 | [`bigviz`](plugins/bigviz/skills/bigviz/SKILL.md) 技能 | 阶段推进、质量关卡、向你确认 |
 
 ```
