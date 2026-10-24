@@ -1,7 +1,7 @@
 {
   "name": "bigviz-vue3-echarts",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "BigViz big-screen template: Vite + Vue 3 + TypeScript + ECharts 5",
   "license": "MIT",
   "type": "module",

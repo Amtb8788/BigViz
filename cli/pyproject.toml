@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "bigviz"
-version = "0.1.0"
+version = "0.2.0"
 description = "Turn a one-line idea into a finished data-visualisation big screen: spec, AI mockups, asset matting, publish and QA."
 readme = "README.md"
 license = "MIT"

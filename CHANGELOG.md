@@ -4,6 +4,8 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-10-24
+
 ### Added
 - Eight panel types in the 2D kit: `gauge`, `liquid`, `radar`, `funnel`, `map` (choropleth,
   markers, flylines, click-to-drill via a GeoJSON loader), `scroll-table`, `alerts`, `flip`.
@@ -13,6 +15,9 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
   source for valid `panels[].type` values and a per-type visual description that mockup
   prompts now use instead of a bare "<type> chart".
 - Layering test for the template kit (`cli/tests/test_template_layout.py`).
+- Release workflow: pushing a `v*.*.*` tag checks the versions, runs the tests, builds the CLI
+  wheel / sdist, the template and demo archives, and publishes a GitHub Release with notes
+  from this file.
 - 3D hero, phase 1: `src/kit/3d/` kit in the Vue template (`ThreeStage`, `CityHero`, a
   procedural digital-twin city with alert beacons and camera tour), demo route `#/city`,
   spec fields `hero.mode` / `hero.scene` / `hero.seed`, `docs/guide-3d.md`.

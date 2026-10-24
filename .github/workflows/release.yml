@@ -1,0 +1,82 @@
+name: Release
+
+# Push a tag like v0.2.0 to build and publish a GitHub Release:
+#   git tag -a v0.2.0 -m "BigViz v0.2.0" && git push origin v0.2.0
+# The tag must match the version in cli/pyproject.toml, the template's package.json and
+# plugin.json. Release notes are the matching section of CHANGELOG.md.
+
+on:
+  push:
+    tags: ["v*.*.*"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      VERSION: ${{ github.ref_name }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check versions match the tag
+        run: |
+          v="${VERSION#v}"
+          py=$(grep -m1 '^version = ' cli/pyproject.toml | cut -d'"' -f2)
+          js=$(node -p "require('./templates/vue3-echarts/package.json').version")
+          pl=$(node -p "require('./plugins/bigviz/.claude-plugin/plugin.json').version")
+          echo "tag=$v cli=$py template=$js plugin=$pl"
+          [ "$py" = "$v" ] && [ "$js" = "$v" ] && [ "$pl" = "$v" ] || { echo "::error::version mismatch"; exit 1; }
+          grep -q "^## \[$v\]" CHANGELOG.md || { echo "::error::CHANGELOG.md has no [$v] section"; exit 1; }
+
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: "3.12"
+      - name: CLI tests and package
+        working-directory: cli
+        run: |
+          uv sync
+          uv run --with pytest pytest -q
+          uv build --out-dir ../release
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: templates/vue3-echarts/package-lock.json
+      - name: Template typecheck and build
+        working-directory: templates/vue3-echarts
+        run: |
+          npm ci
+          npm run build
+
+      - name: Package archives
+        run: |
+          # Source archives come from git, so node_modules / dist / caches never leak in.
+          git archive --format=zip --prefix=bigviz-template-vue3-echarts/ -o "release/bigviz-template-vue3-echarts-$VERSION.zip" HEAD:templates/vue3-echarts
+          git archive --format=zip --prefix=bigviz-plugin/ -o "release/bigviz-plugin-$VERSION.zip" HEAD:plugins/bigviz
+          (cd templates/vue3-echarts/dist && zip -qr "../../../release/bigviz-demo-$VERSION.zip" .)
+          (cd release && sha256sum * > SHA256SUMS.txt)
+          ls -l release
+
+      - name: Release notes from CHANGELOG
+        run: |
+          v="${VERSION#v}"
+          awk -v h="## [$v]" '
+            index($0, h) == 1 { on = 1; next }
+            on && index($0, "## [") == 1 { exit }
+            on { print }
+          ' CHANGELOG.md > release/NOTES.md
+          test -s release/NOTES.md
+
+      - name: Publish GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$VERSION" --title "BigViz $VERSION" --notes-file release/NOTES.md \
+            release/*.whl release/*.tar.gz release/*.zip release/SHA256SUMS.txt
