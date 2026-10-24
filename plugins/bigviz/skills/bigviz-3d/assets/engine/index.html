@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Living Diorama</title>
+    <link rel="stylesheet" href="./src/ui/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <canvas id="stage" aria-label="三维微缩沙盘" role="img"></canvas>
+      <div id="tilt" aria-hidden="true"><i></i><i></i></div>
+      <div id="ui" aria-live="polite"></div>
+      <div id="loading" role="status">
+        <div class="loading__title">LIVING DIORAMA</div>
+        <div class="loading__bar"><i></i></div>
+        <div class="loading__text">正在铺开图纸…</div>
+      </div>
+      <noscript>需要启用 JavaScript 才能运行三维沙盘。</noscript>
+    </div>
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>
