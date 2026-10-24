@@ -91,9 +91,9 @@
 // Hero hub: centre artwork on an elliptical orbit with N nodes placed clockwise. Arrowed arcs link
 // consecutive nodes; two dots travel the orbit and make each node pulse as they pass.
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, useId, watch } from 'vue'
-import type { BigVizAsset, HubNode } from './types'
+import type { BigVizAsset, HubNode } from '../types'
 import CountUp from './CountUp.vue'
-import { ENTRANCE, useDocumentVisible, useReducedMotion } from './motion'
+import { ENTRANCE, useDocumentVisible, useReducedMotion } from '@/kit/core/motion'
 
 const props = withDefaults(
   defineProps<{

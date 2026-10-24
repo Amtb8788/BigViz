@@ -14,12 +14,13 @@ from typing import Any, Callable
 
 import yaml
 
+from bigviz.catalog import PANEL_TYPES
+
 SPEC_FILE = "bigviz.yaml"
 SLUG_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 HEX_RE = re.compile(r"^#[0-9A-Fa-f]{6}$")
 PALETTE_KEYS = ("bg0", "bg1", "primary", "accent", "warn", "ok", "violet", "text")
 FONT_KEYS = ("ui", "number")
-PANEL_TYPES = ("line", "bar", "pie", "ring", "rank", "podium", "kpi", "table", "custom")
 MATTE_METHODS = ("none", "unscreen", "black", "grabcut")
 HERO_MODES = ("image", "three")  # image: generated hero art; three: live three.js scene
 HERO_SCENES = ("city",)  # procedural scenes available in three mode

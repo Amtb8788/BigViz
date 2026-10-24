@@ -3,7 +3,7 @@
  * primary glow band, and sparse rising "data motes" (one Points draw call, shader-animated).
  */
 import { AdditiveBlending, BackSide, BufferAttribute, BufferGeometry, Mesh, Points, ShaderMaterial, SphereGeometry } from 'three'
-import { mulberry32 } from '../../random'
+import { mulberry32 } from '@/kit/core/random'
 import { SHARED_GLSL, type CityColors, type SharedUniforms } from './colors'
 import { CITY } from './layout'
 

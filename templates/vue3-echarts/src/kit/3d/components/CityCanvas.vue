@@ -37,8 +37,8 @@
 // stage's CSS zoom.
 import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import ThreeStage from './ThreeStage.vue'
-import { createCityScene, type CityScene, type ProjectedLabel } from './scenes/city'
-import type { CityAlert, LabelInsets, StageContext } from './types'
+import { createCityScene, type CityScene, type ProjectedLabel } from '../scenes/city'
+import type { CityAlert, LabelInsets, StageContext } from '../types'
 
 const props = withDefaults(
   defineProps<{

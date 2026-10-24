@@ -1,7 +1,8 @@
 # BigViz template: Vue 3 + ECharts
 
 Standalone Vite + Vue 3 + TypeScript + ECharts 5 big-screen template. No UI library, no
-framework coupling. `src/screen/` is the reusable kit; `src/views/Example/` is a complete demo.
+framework coupling. `src/kit/` is the reusable kit; `src/views/` holds the demo pages
+(`Example` 2D, `City` 3D, and `Gallery`, which shows every panel component at `#/gallery`).
 
 ## Run
 
@@ -53,18 +54,56 @@ Components take geometry from the manifest (`aspect`, `trim`) and never use type
 regenerated asset with a different size lays out correctly with no CSS edits. Do not edit the
 manifest by hand.
 
-## Kit (`src/screen/`)
+## Kit (`src/kit/`)
+
+```
+kit/
+├── core/   shared by 2D and 3D: BigScreen, theme.css, palette, motion, random, types
+├── 2d/     ECharts + DOM panels: components/, charts/, catalog.ts, types.ts
+└── 3d/     optional three.js hero: components/, scenes/ (lazy-loaded)
+```
+
+`2d` and `3d` only import `core`, never each other, so a 2D-only app can delete `kit/3d/` and
+drop `three` / `@types/three` from `package.json`. Imports use the `@` → `src` alias.
+
+### `core/`
 
 | File | Purpose |
 |---|---|
 | `BigScreen.vue` | 1920×1080 design stage. Stretches to the container aspect (clamped 4/3–32/9), scales with CSS `zoom`, and is centred with flex. Exposes `zoom` and `pixelRatio`. |
+| `context.ts` | Screen context (`zoom`, pixel ratio) provided by `BigScreen` |
+| `palette.ts`, `theme.css` | `--bv-bg0 … --bv-text` tokens (preset palette keys) and a reader for them in JS |
+| `motion.ts` | `ENTRANCE` timeline, `useVisibleInterval`, `useReducedMotion` |
+| `random.ts` | Seeded random numbers for reproducible demos and scenes |
+| `types.ts` | `BigVizAsset` (published asset), `AlertLevel` |
+
+### `2d/`
+
+| File | Purpose |
+|---|---|
 | `ScreenPanel.vue` | Panel frame with entrance and ambient loops |
 | `ScreenChart.vue` | ECharts host. `devicePixelRatio` = zoom × DPR, rounded up to 0.5 and capped at 4. The chart is rebuilt when that value changes. |
 | `RankList.vue`, `CountUp.vue`, `KpiCards.vue` | Ranking bars, rolling numbers, KPI strip |
 | `HeroHub.vue` | Centre artwork on an SVG orbit with N nodes |
 | `Podium.vue` + `PodiumCrown.vue` | Base image with text overlay and an optional trophy effect (`crown` prop or `#back` / `#front` slots) |
-| `motion.ts` | `ENTRANCE` timeline, `useVisibleInterval`, `useReducedMotion` |
-| `theme.css` | `--bv-bg0 … --bv-text` tokens (preset palette keys) |
+| `charts/echarts.ts` | Tree-shaken ECharts registration (add chart types here) |
+| `charts/options.ts` | ECharts option builders: `gaugeOption`, `radarOption`, `funnelOption` (palette-aware) |
+| `LiquidFill.vue` | Liquid-fill ball with waves, warn / danger thresholds |
+| `GeoMap.vue` | Choropleth map with markers, flylines and click-to-drill. Takes a `loader(code)` returning GeoJSON; the gallery uses fictional outlines from `views/Gallery/demo-map.ts` |
+| `ScrollTable.vue`, `AlertFeed.vue` | Auto-scrolling table (pauses on hover), live alert feed by level |
+| `FlipNumber.vue` | Flip-tile counter; `minDigits` pads with zeros and drops separators |
+| `catalog.ts` | `panels[].type` → component map, mirrors `cli/src/bigviz/catalog.py` |
+
+Vue files above live in `2d/components/`.
+
+### `3d/`
+
+| File | Purpose |
+|---|---|
+| `index.ts` | Public entry: import `CityHero` from `@/kit/3d`; it lazy-loads three.js on first mount |
+| `components/CityHero.vue` | City + alert beacons + camera tour, with an image fallback when WebGL is unavailable |
+| `components/ThreeStage.vue` | Canvas, renderer, loop, zoom-aware sizing, dispose |
+| `scenes/city/` | The procedural city (layout, buildings, traffic, beacons, post-processing) |
 
 Only `transform` and `opacity` are animated. Every looped effect has a `prefers-reduced-motion`
 fallback.
@@ -87,7 +126,8 @@ isolated group, and its `mix-blend-mode: screen` children stop blending with the
    a screen that is 60 px short or cropped at the top. Use a dedicated blank layout for the route,
    or wrap the screen in your own element that the host rules do not target. Avoid `!important`
    overrides.
-3. Import `src/screen/theme.css` once, and copy `src/screen/` as a folder.
+3. Copy `src/kit/` as a folder (without `3d/` for 2D-only), keep the `@` → `src` alias, and
+   import `src/kit/core/theme.css` once.
 4. Replace the plain `fetch` in `src/api/screen.ts` with the host's request helper if it needs
    auth headers. Keep `parseScreenData` at the boundary.
 

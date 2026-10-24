@@ -13,7 +13,7 @@ Skill-family / multi-agent design: `references/agent-design.md`. Prompt library:
 ## When to use
 
 - A 3D scene that changes over time (build progress, shifts, traffic, weather, day/night).
-- A 3D hero for a BigViz dashboard (`templates/vue3-echarts/src/screen3d`), with alarms/telemetry.
+- A 3D hero for a BigViz dashboard (`templates/vue3-echarts/src/kit/3d`), with alarms/telemetry.
 - Not for: static product renders, pure 2D charts, GIS analysis (use proper GIS tools).
 
 ## Quick start

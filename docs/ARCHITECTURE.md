@@ -106,7 +106,7 @@ panels:                          # order = reading order; column: left|center|ri
   - id: trend
     column: left
     title: Points Trend
-    type: line                   # line|bar|pie|ring|rank|podium|kpi|table|custom
+    type: line                   # line|bar|…|map|alerts|custom (full list: guide-spec.md)
     data: { x: [Mon, Tue], series: [{ name: Earned, values: [120, 98] }] }
     notes: optional free text for the designer prompt
 hero:                            # center visual
@@ -162,13 +162,21 @@ Ship at least: `deep-tech-blue` (default, CN command-center style), `editorial-d
 ## 6. Template contract (`templates/vue3-echarts`)
 
 - Vite + Vue 3 + TS + ECharts 5; no UI library; `npm create`-style copy, no framework coupling.
-- `src/screen/` reusable kit: `BigScreen.vue` (1920×1080 base, CSS `zoom`, aspect clamp 4/3–32/9),
-  `ScreenPanel.vue`, `ScreenChart.vue` (devicePixelRatio = zoom × DPR, rounded 0.5, max 4),
-  `RankList.vue`, `CountUp.vue`, `KpiCards.vue`, `HeroHub.vue`, `motion.ts`
-  (`ENTRANCE` timeline, `useVisibleInterval`, `useReducedMotion`).
-- Optional `src/screen3d/` kit for `hero.mode: three`: `CityHero` (three.js lazy-loaded), demo route `#/city`.
+- `src/kit/` reusable kit in three layers. Imports point one way (`core` ← `2d`, `core` ← `3d`);
+  `2d` and `3d` never import each other or `views/` (`cli/tests/test_template_layout.py`).
+- `kit/core/`: `BigScreen.vue` (1920×1080 base, CSS `zoom`, aspect clamp 4/3–32/9), `context.ts`,
+  `theme.css`, `palette.ts`, `motion.ts` (`ENTRANCE` timeline, `useVisibleInterval`,
+  `useReducedMotion`), `random.ts`, shared `types.ts` (`BigVizAsset`, `AlertLevel`).
+- `kit/2d/`: `components/` (`ScreenPanel`, `ScreenChart` with devicePixelRatio = zoom × DPR rounded
+  0.5 max 4, `RankList`, `CountUp`, `KpiCards`, `HeroHub`, `Podium`, `LiquidFill`, `GeoMap` with
+  choropleth / markers / flylines / click-to-drill via a GeoJSON `loader`, `ScrollTable`,
+  `AlertFeed`, `FlipNumber`); `charts/` (tree-shaken `echarts.ts`, `options.ts` with
+  `gaugeOption` / `radarOption` / `funnelOption`); `catalog.ts` maps each `panels[].type` to its
+  component and mirrors `cli/src/bigviz/catalog.py` (checked by a test). Gallery route `#/gallery`.
+- `kit/3d/` (optional, `hero.mode: three`): `components/` (`CityHero`, three.js lazy-loaded;
+  `ThreeStage`), `scenes/city/`. Demo route `#/city`.
 - `src/views/Example/` consumes `assets.manifest.ts` + `src/mock/example.json`.
-- Theme tokens are CSS custom properties generated from the spec palette (`src/screen/theme.css`).
+- Theme tokens are CSS custom properties generated from the spec palette (`src/kit/core/theme.css`).
 - Only animate `transform` / `opacity`; every looped effect has a reduced-motion fallback.
 
 ## 7. Licensing & hygiene

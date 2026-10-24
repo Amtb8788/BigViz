@@ -4,7 +4,7 @@
  * language survives switching between `#/` and `#/city`.
  */
 import { computed, ref, watchEffect } from 'vue'
-import type { AlertLevel } from '@/screen3d/types'
+import type { AlertLevel } from '@/kit/3d/types'
 import type { AlertType, CityKpiId } from './types'
 
 export type Locale = 'en' | 'zh'

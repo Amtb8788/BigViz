@@ -1,5 +1,5 @@
 /** Data contract of the city screen (`/mock/city.json` or `VITE_CITY_API_URL`). All data is fictional. */
-import type { AlertLevel } from '@/screen3d/types'
+import type { AlertLevel } from '@/kit/3d/types'
 
 export type CityKpiId = 'health' | 'sensors' | 'speed' | 'gridLoad'
 export type AlertType = 'traffic' | 'power' | 'water' | 'air' | 'fire' | 'crowd' | 'parking'

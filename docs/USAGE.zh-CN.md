@@ -43,8 +43,9 @@ npm run dev
 |---|---|
 | <http://localhost:5173/> | 2D 安全指挥中心（ECharts） |
 | <http://localhost:5173/#/city> | 3D 智慧城市运营中心（three.js） |
+| <http://localhost:5173/#/gallery> | 2D 组件库：仪表盘、水球、雷达、漏斗、下钻地图、滚动表格、告警流、翻牌器 |
 
-如果 5173 端口被占用，Vite 会自动换一个端口，以终端打印的地址为准。两个页面右上角都有中英文切换按钮，
+如果 5173 端口被占用，Vite 会自动换一个端口，以终端打印的地址为准。每个页面右上角都有中英文切换按钮，
 数据来自 `src/mock/` 下的模拟数据。
 
 ## 3. 安装
@@ -242,16 +243,27 @@ npm run preview     # 本地预览 dist/
 
 ```
 src/
-├── App.vue              # hash 路由：#/city → 3D 城市，其他 → 示例大屏
+├── App.vue              # hash 路由：#/city → 3D 城市，#/gallery → 组件库，其他 → 示例大屏
 ├── api/                 # fetch + 运行时校验（screen.ts、city.ts、validate.ts）
 ├── mock/                # example.json、city.json（开发时映射到 /mock/*.json）
-├── screen/              # 2D 组件：BigScreen、ScreenPanel、ScreenChart、RankList……
-├── screen3d/            # 3D 组件：ThreeStage、CityHero、程序化城市
 ├── assets/bigviz/       # bigviz publish 写入的素材
-└── views/
+├── kit/                 # 可复用组件库，可整体拷到其他项目
+│   ├── core/            # 2D 和 3D 共用：BigScreen、theme.css、配色、动效、公共类型
+│   ├── 2d/              # ECharts + DOM 面板（依赖 echarts）
+│   │   ├── components/  # ScreenPanel、ScreenChart、GeoMap、RankList……
+│   │   ├── charts/      # 按需引入的 ECharts 和图表配置
+│   │   └── catalog.ts   # panels[].type → 组件
+│   └── 3d/              # three.js 主视觉，懒加载（依赖 three）
+│       ├── components/  # CityHero、ThreeStage
+│       └── scenes/      # 程序化城市
+└── views/               # 用组件库拼出来的页面
     ├── Example/         # 2D 参考大屏
+    ├── Gallery/         # 全部 2D 面板组件
     └── City/            # 3D 参考大屏
 ```
+
+依赖只有一个方向：`2d` 和 `3d` 都可以引用 `core`，`views` 可以引用任意一层；`2d` 和 `3d` 互不引用
+（CLI 测试会检查）。只做 2D 的项目可以直接删掉 `kit/3d/`。
 
 ### 6.3 接入真实数据
 
@@ -275,7 +287,7 @@ VITE_CITY_API_URL=https://api.example.com/city     # 3D 城市大屏
 
 ### 6.5 主题与布局
 
-- 颜色是 `src/screen/theme.css` 里的 CSS 变量（`--bv-bg0 … --bv-text`），对应预设的配色键。
+- 颜色是 `src/kit/core/theme.css` 里的 CSS 变量（`--bv-bg0 … --bv-text`），对应预设的配色键。
 - `BigScreen` 按 1920×1080 设计稿布局，自适应容器比例（限制在 4:3 到 32:9 之间），用 CSS `zoom` 缩放，
   任何尺寸文字都清晰。
 - 图表按 `zoom × devicePixelRatio` 渲染，4K 屏也不糊。
@@ -290,7 +302,8 @@ VITE_CITY_API_URL=https://api.example.com/city     # 3D 城市大屏
 
 ### 6.7 嵌入已有后台系统
 
-1. 把 `src/screen/`（需要 3D 再加 `src/screen3d/`）整个文件夹拷过去，`theme.css` 全局引入一次。
+1. 把 `src/kit/` 整个文件夹拷过去（只做 2D 就去掉 `kit/3d/`），`kit/core/theme.css` 全局引入一次。
+   组件库内部通过 `@` → `src` 别名互相引用。
 2. 给大屏一个铺满视口的容器：`.my-screen { position: fixed; inset: 0; z-index: 3000; }`
 3. 路由使用空白布局。后台框架常给页面根节点加 `height: calc(100% - 60px)`、内边距或 overflow，会导致大屏被裁切。
 

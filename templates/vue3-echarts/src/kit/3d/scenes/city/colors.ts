@@ -3,7 +3,7 @@
  * objects shared by every city material so one write per frame updates them all.
  */
 import { Color, Vector2 } from 'three'
-import { readPalette, type Palette } from '@/screen/palette'
+import { readPalette, type Palette } from '@/kit/core/palette'
 import type { AlertLevel } from '../../types'
 
 /** Used when `--bv-danger` is not defined by the theme */

@@ -7,7 +7,7 @@
 | [Quick start](guide-quickstart.md) | Install, configure, full CLI walkthrough |
 | [Spec reference](guide-spec.md) | Every field in `bigviz.yaml` |
 | [Matting guide](guide-matting.md) | Choosing and tuning background removal |
-| [3D hero guide](guide-3d.md) | The `screen3d` kit and the digital-twin city |
+| [3D hero guide](guide-3d.md) | The `kit/3d` kit and the digital-twin city |
 | [Architecture](ARCHITECTURE.md) | Repo layout, CLI commands, spec and template contracts |
 
 `media/` holds README images.

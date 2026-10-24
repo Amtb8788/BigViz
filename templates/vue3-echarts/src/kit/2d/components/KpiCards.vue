@@ -38,9 +38,9 @@
 <script setup lang="ts">
 // KPI strip: icon + value + optional change vs. previous period. Icon geometry comes from the
 // asset manifest (aspect + trim), so the visible artwork, not the PNG box, is what gets spaced.
-import type { KpiItem } from './types'
+import type { KpiItem } from '../types'
 import CountUp from './CountUp.vue'
-import { ENTRANCE } from './motion'
+import { ENTRANCE } from '@/kit/core/motion'
 
 withDefaults(defineProps<{ items: KpiItem[]; locale?: string }>(), { locale: 'en-US' })
 

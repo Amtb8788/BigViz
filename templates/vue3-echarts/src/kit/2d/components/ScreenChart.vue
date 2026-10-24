@@ -6,9 +6,9 @@
 // ECharts container: takes a full option, resizes with its box, and re-creates the chart when the
 // stage pixel ratio changes (devicePixelRatio is an init-only setting in ECharts).
 import { markRaw, onBeforeUnmount, onMounted, ref, shallowRef, watch } from 'vue'
-import { init, type ECharts, type EChartsOption } from './echarts'
-import { useScreen } from './context'
-import { useReducedMotion } from './motion'
+import { init, type ECharts, type EChartsOption } from '../charts/echarts'
+import { useScreen } from '@/kit/core/context'
+import { useReducedMotion } from '@/kit/core/motion'
 
 const props = withDefaults(
   defineProps<{

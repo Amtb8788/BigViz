@@ -179,9 +179,10 @@ Presets are plain YAML in `cli/src/bigviz/presets/`. Override colours per screen
 [`templates/vue3-echarts`](templates/vue3-echarts) is a standalone Vite + Vue 3 + TypeScript
 screen with no UI library. Drop its kits into any existing app:
 
-- **`src/screen/`**: `BigScreen`, `ScreenPanel`, `ScreenChart`, `RankList`, `CountUp`,
-  `KpiCards`, `HeroHub`, `Podium`, `motion.ts`, `theme.css`
-- **`src/screen3d/`**: `ThreeStage` and `CityHero`, lazy-loaded so 2D screens never download
+- **`src/kit/core/`**: `BigScreen`, `theme.css`, palette, motion and shared types
+- **`src/kit/2d/`**: `ScreenPanel`, `ScreenChart`, `RankList`, `KpiCards`, `Podium`, `GeoMap`,
+  `LiquidFill`, `ScrollTable`, `AlertFeed`, `FlipNumber` and more (see `#/gallery`)
+- **`src/kit/3d/`**: `ThreeStage` and `CityHero`, lazy-loaded so 2D screens never download
   three.js
 
 Data comes from `fetch` with runtime validation, silent refresh and last-good fallback. Point
@@ -216,7 +217,7 @@ All 15 commands are documented in [docs/USAGE.md](docs/USAGE.md#5-cli-reference)
 | [Usage guide](docs/USAGE.md) | **Start here.** Install, first screen, CLI, template, 3D, deploy, troubleshooting |
 | [使用手册（中文）](docs/USAGE.zh-CN.md) | The same guide in Chinese |
 | [Spec reference](docs/guide-spec.md) | Every field in `bigviz.yaml` |
-| [3D hero guide](docs/guide-3d.md) | The `screen3d` kit and the digital-twin city |
+| [3D hero guide](docs/guide-3d.md) | The `kit/3d` kit and the digital-twin city |
 | [Matting guide](docs/guide-matting.md) | Choosing and tuning background removal |
 | [Architecture](docs/ARCHITECTURE.md) | Repo layout and the contracts between CLI, template and skills |
 

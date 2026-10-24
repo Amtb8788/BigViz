@@ -49,9 +49,9 @@
 // Rank list with bars normalised to the leader. More rows than `visible` → seamless upward scroll;
 // otherwise the highlight steps through the rows.
 import { computed, onBeforeUnmount, ref, watch } from 'vue'
-import type { RankRow } from './types'
+import type { RankRow } from '../types'
 import CountUp from './CountUp.vue'
-import { ENTRANCE, useReducedMotion, useVisibleInterval } from './motion'
+import { ENTRANCE, useReducedMotion, useVisibleInterval } from '@/kit/core/motion'
 
 /** Row entrance stagger (s) */
 const STAGGER = 0.08

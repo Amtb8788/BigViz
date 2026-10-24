@@ -18,9 +18,9 @@
 <script setup lang="ts">
 // Alerts per level: donut (colours shared with the 3D beacons) and a legend with counts.
 import { computed } from 'vue'
-import ScreenChart from '@/screen/ScreenChart.vue'
-import { readPalette } from '@/screen/palette'
-import type { AlertLevel } from '@/screen3d/types'
+import ScreenChart from '@/kit/2d/components/ScreenChart.vue'
+import { readPalette } from '@/kit/core/palette'
+import type { AlertLevel } from '@/kit/3d/types'
 import { buildLevelOption, levelColors } from '../chart-options'
 import { useI18n } from '../i18n'
 

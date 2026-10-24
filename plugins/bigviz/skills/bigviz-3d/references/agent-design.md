@@ -91,7 +91,7 @@ QA 断言通过 `window.__diorama` 自动化 API 实现（`step`、`stats`、`en
 | `bigviz-brief` | `twin-brief` | `bigviz.yaml` 的 hero 概念若为“3D 孪生”，编排器调用 `twin-brief`，并把 `twin.yaml` 路径写入 `bigviz.yaml#hero.twin` |
 | `bigviz-design` | `twin-qa` 截图 | 设计稿中的 hero 区域可直接用 twin 的 T2 截图作为参考图，减少 AI 出图与实际 3D 的落差 |
 | `bigviz-assets` | `twin-assets` | 大屏 2D 图标/切图归 BigViz；3D 模型归 twin。共用 `BIGVIZ_API_KEY` 的图像生成能力做 PBR 贴图与 image-to-3D 参考图 |
-| `bigviz-build` | `TwinHero.vue` | 在 `src/screen3d` 下与 `CityHero` 并列；数据走 `src/api/` 同一数据源 |
+| `bigviz-build` | `TwinHero.vue` | 在 `src/kit/3d` 下与 `CityHero` 并列；数据走 `src/api/` 同一数据源 |
 | `bigviz-qa` | `twin-qa` | BigViz QA 截全屏与面板；twin QA 截 3D 内部状态；两份报告合并为交付报告 |
 
 调用方向：BigViz 编排器可以调用 twin 技能；twin 编排器在用户需要“大屏外壳”时调用 BigViz。两者都不复制对方的规格，只存路径引用。

@@ -44,8 +44,9 @@ npm run dev
 |---|---|
 | <http://localhost:5173/> | 2D safety command center (ECharts) |
 | <http://localhost:5173/#/city> | 3D smart-city operations center (three.js) |
+| <http://localhost:5173/#/gallery> | 2D component gallery: gauge, liquid, radar, funnel, drill-down map, scroll table, alerts, flip counter |
 
-If port 5173 is busy, Vite picks the next one; use the URL it prints. Both screens switch
+If port 5173 is busy, Vite picks the next one; use the URL it prints. Every screen switches
 between English and Chinese with the button in the top-right corner, and run on mock data from
 `src/mock/`.
 
@@ -253,16 +254,27 @@ npm run preview     # serve dist/ locally
 
 ```
 src/
-├── App.vue              # hash routing: #/city → 3D city, anything else → example
+├── App.vue              # hash routing: #/city → 3D city, #/gallery → components, else → example
 ├── api/                 # fetch + runtime validation (screen.ts, city.ts, validate.ts)
 ├── mock/                # example.json, city.json (served at /mock/*.json)
-├── screen/              # 2D kit: BigScreen, ScreenPanel, ScreenChart, RankList, …
-├── screen3d/            # 3D kit: ThreeStage, CityHero, procedural city
 ├── assets/bigviz/       # assets written by `bigviz publish`
-└── views/
+├── kit/                 # reusable kit, copy into other apps
+│   ├── core/            # shared by 2D and 3D: BigScreen, theme.css, palette, motion, types
+│   ├── 2d/              # ECharts + DOM panels (needs echarts)
+│   │   ├── components/  # ScreenPanel, ScreenChart, GeoMap, RankList, …
+│   │   ├── charts/      # tree-shaken ECharts setup + option builders
+│   │   └── catalog.ts   # panels[].type → component
+│   └── 3d/              # three.js hero, lazy-loaded (needs three)
+│       ├── components/  # CityHero, ThreeStage
+│       └── scenes/      # procedural city
+└── views/               # pages built from the kit
     ├── Example/         # 2D reference screen
+    ├── Gallery/         # every 2D panel component
     └── City/            # 3D reference screen
 ```
+
+Imports only point one way: `core` ← `2d`, `core` ← `3d`, and `views` use any of them. `2d` and
+`3d` never import each other (a CLI test checks this), so a 2D-only app can delete `kit/3d/`.
 
 ### 6.3 Connect real data
 
@@ -290,7 +302,7 @@ button toggles them. Data values (team names, places) are shown as the API retur
 
 ### 6.5 Theme and layout
 
-- Colours are CSS variables in `src/screen/theme.css` (`--bv-bg0 … --bv-text`). They map to
+- Colours are CSS variables in `src/kit/core/theme.css` (`--bv-bg0 … --bv-text`). They map to
   the preset palette keys.
 - `BigScreen` lays out on a 1920×1080 stage, stretches to the container aspect (clamped 4:3 to
   32:9) and scales with CSS `zoom`, so text stays sharp at any size.
@@ -307,7 +319,8 @@ button toggles them. Data values (team names, places) are shown as the API retur
 
 ### 6.7 Embed in an existing admin app
 
-1. Copy `src/screen/` (and `src/screen3d/` for 3D) as folders, and import `theme.css` once.
+1. Copy `src/kit/` as a folder (drop `kit/3d/` if you only need 2D) and import
+   `kit/core/theme.css` once. The kit imports through the `@` → `src` alias.
 2. Give the screen a full-viewport wrapper: `.my-screen { position: fixed; inset: 0; z-index: 3000; }`
 3. Use a blank layout for the route. Admin shells often add `height: calc(100% - 60px)`, padding
    or overflow to the page root, which crops the screen.

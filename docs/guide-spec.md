@@ -30,7 +30,7 @@ panels:                          # order = reading order
   - id: trend                    # unique, kebab-case; used by `prompt panel <id>`
     column: left                 # left | center | right
     title: Points Trend          # exact on-screen title
-    type: line                   # line|bar|pie|ring|rank|podium|kpi|table|custom
+    type: line                   # see "Panel types" below
     data:                        # exact data; goes into the prompt and the page mock
       x: [Mon, Tue]
       series: [{ name: Earned, values: [120, 98] }]
@@ -87,9 +87,36 @@ assets:                          # cut list; units = pixels of design.final
 ### panels
 - `type` picks the component family in the template; `custom` means hand-built.
 - `data` is free-form per type. Use exact values and units; they are copied verbatim into
-  the prompt. Common shapes: `x` + `series` for line/bar, `items` of `{ name, value }` for
-  pie/ring/rank/podium.
+  the prompt. Suggested shapes are in the table below.
 - Keep `notes` to styling hints. Data in `notes` is not validated.
+
+#### Panel types
+
+The list lives in `cli/src/bigviz/catalog.py` (mirrored by the template's
+`src/kit/2d/catalog.ts`; a test keeps them in sync). Each type also tells the mockup prompt
+what the panel looks like, so the image model draws something the kit can rebuild. Run
+`#/gallery` in the template to see every component.
+
+| `type` | Component | Suggested `data` |
+|---|---|---|
+| `line`, `bar` | `ScreenChart` | `x`, `series: [{ name, values }]` |
+| `pie`, `ring` | `ScreenChart` | `items: [{ name, value }]` |
+| `rank` | `RankList` | `items: [{ name, value }]` |
+| `podium` | `Podium` + `RankList` | `items: [{ name, value }]` (top three on the podium) |
+| `kpi` | `KpiCards` + `CountUp` | `items: [{ name, value, unit }]` |
+| `gauge` | `ScreenChart` (`gaugeOption`) | `value`, `min`, `max`, `unit`, `label`, optional `warn` / `danger` (0–1) |
+| `liquid` | `LiquidFill` | `value` (0–1), `label`, optional `warn` / `danger` |
+| `radar` | `ScreenChart` (`radarOption`) | `indicators: [{ name, max }]`, `series: [{ name, values }]` |
+| `funnel` | `ScreenChart` (`funnelOption`) | `stages: [{ name, value }]` widest first, `unit` |
+| `map` | `GeoMap` | `regions: [{ name, value }]`, `points: [{ name, coord, level }]`, `lines: [{ from, to }]` |
+| `scroll-table` | `ScrollTable` | `columns: [{ key, title }]`, `rows` |
+| `alerts` | `AlertFeed` | `items: [{ level: info\|warn\|critical, title, source, time }]` |
+| `flip` | `FlipNumber` | `value`, `label`, `unit`, optional `min_digits` |
+| `table`, `custom` | local component | anything; describe the look in `notes` |
+
+`map` needs GeoJSON at build time. `GeoMap` takes a `loader(code)`, so you can serve your own
+boundaries (features with `properties.name`; `adcode` enables click-to-drill). The gallery
+uses generated demo outlines from `src/views/Gallery/demo-map.ts`, not real boundaries.
 
 ### hero
 - `concept` selects the default variant; `bigviz prompt design --hero <key>` swaps only the

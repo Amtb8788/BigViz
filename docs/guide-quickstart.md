@@ -75,7 +75,7 @@ bigviz publish --app ../../my-app --name MyScreen
 
 ## 5. Build and check
 
-Copy `templates/vue3-echarts` (or embed its `src/screen/` kit), map panels to components,
+Copy `templates/vue3-echarts` (or embed its `src/kit/` folder), map panels to components,
 then start the dev server yourself and run:
 
 ```bash

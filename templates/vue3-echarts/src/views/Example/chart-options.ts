@@ -2,9 +2,9 @@
  * ECharts options for the example screen. Colours come from the theme tokens via readPalette(),
  * so the canvas matches the CSS. The screen is always dark; it does not follow OS colour scheme.
  */
-import { escapeHtml, type EChartsOption } from '@/screen/echarts'
-import { ENTRANCE } from '@/screen/motion'
-import { alpha, type Palette } from '@/screen/palette'
+import { escapeHtml, type EChartsOption } from '@/kit/2d/charts/echarts'
+import { ENTRANCE } from '@/kit/core/motion'
+import { alpha, type Palette } from '@/kit/core/palette'
 import type { ExampleCategory, ExampleTrend } from './types'
 
 /** First render waits for the panels to slide in; update animations are not delayed */

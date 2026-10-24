@@ -4,8 +4,8 @@
  * hidden. Same contract style as ./screen.ts.
  */
 import { onMounted, ref, shallowRef } from 'vue'
-import { useVisibleInterval } from '@/screen/motion'
-import type { AlertLevel } from '@/screen3d/types'
+import { useVisibleInterval } from '@/kit/core/motion'
+import type { AlertLevel } from '@/kit/3d/types'
 import type { AlertType, CityKpiId, CityScreenData } from '@/views/City/types'
 import { ShapeError, arr, num, numIn, obj, oneOf, str } from './validate'
 

@@ -3,7 +3,7 @@
  * circle, a winding river, a dense downtown plus a few secondary hubs, and each block subdivided
  * into lots with towers, podiums and spires. Deterministic for a given seed.
  */
-import { between, mulberry32, type Random } from '../../random'
+import { between, mulberry32, type Random } from '@/kit/core/random'
 
 /** World units. The city spans roughly -RADIUS … RADIUS on x and z. */
 export const CITY = {

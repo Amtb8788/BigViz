@@ -36,8 +36,8 @@
 // not import three.js; CityCanvas (and with it the `three` chunk) is loaded on first mount, so
 // screens that never render a CityHero never download it.
 import { defineAsyncComponent, onErrorCaptured, ref } from 'vue'
-import type { BigVizAsset } from '@/screen/types'
-import type { CityAlert, LabelInsets } from './types'
+import type { BigVizAsset } from '@/kit/core/types'
+import type { CityAlert, LabelInsets } from '../types'
 
 const CityCanvas = defineAsyncComponent(() => import('./CityCanvas.vue'))
 

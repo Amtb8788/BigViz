@@ -298,7 +298,7 @@ site:zc            （项目/园区/厂区）
 
 ## 8. 与 BigViz 大屏的衔接
 
-BigViz 模板（`templates/vue3-echarts`）已有 `src/screen3d`：`ThreeStage.vue`（渲染器生命周期）、`CityHero.vue`（props: `alerts`, `focusId`, `seed`, `autoTour`, `fallback`, `labelInsets`；事件: `select`, `fallback`），以及 `src/api/` 数据接口层。衔接方案：
+BigViz 模板（`templates/vue3-echarts`）已有 `src/kit/3d`：`ThreeStage.vue`（渲染器生命周期）、`CityHero.vue`（props: `alerts`, `focusId`, `seed`, `autoTour`, `fallback`, `labelInsets`；事件: `select`, `fallback`），以及 `src/api/` 数据接口层。衔接方案：
 
 1. 新增 `TwinHero.vue`（与 `CityHero` 同形）：`props: { scene: string | SceneJson, focusId, tier, labelInsets, fallback }`，`emit: select(entityId), alarm(alarm), fallback(reason)`，暴露 `flyTo(id)`、`isolateFloor(id)`。内部以 iframe 或直接 import 引擎包加载场景；推荐打包为 `@bigviz/3d-engine` ESM 库，由 BigViz 的 `ThreeStage` 托管 renderer。
 2. 数据单一来源：大屏面板（ECharts）和 3D 孪生读同一个 `src/api/` 数据源；孪生层的 `TelemetryFrame` 也可推给面板，避免两套轮询。

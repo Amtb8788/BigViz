@@ -1,11 +1,12 @@
 /**
- * Shared types for the optional BigViz 3D kit (`src/screen3d/`). Only `import type` from three.js
- * here, so 2D screens can use these types without pulling the 3D chunk into their bundle.
+ * Types for the optional 3D kit (`src/kit/3d/`). Only `import type` from three.js here, so 2D
+ * screens can use these types without pulling the 3D chunk into their bundle.
  */
 import type { Object3D, WebGLRenderer } from 'three'
+import type { AlertLevel } from '@/kit/core/types'
 
 /** Severity of a city alert; drives the beacon colour (ok / warn / danger) */
-export type AlertLevel = 'info' | 'warn' | 'critical'
+export type { AlertLevel }
 
 /** One alert beacon on the city */
 export interface CityAlert {

@@ -39,8 +39,8 @@
 // static (animating the gradient would repaint every frame); the ring sweeps in with a rotate and
 // the pointer travels to the end with a transform transition.
 import { computed, onBeforeUnmount, ref } from 'vue'
-import CountUp from '@/screen/CountUp.vue'
-import { ENTRANCE, useReducedMotion } from '@/screen/motion'
+import CountUp from '@/kit/2d/components/CountUp.vue'
+import { ENTRANCE, useReducedMotion } from '@/kit/core/motion'
 import { useI18n } from '../i18n'
 import type { ExampleConversion } from '../types'
 

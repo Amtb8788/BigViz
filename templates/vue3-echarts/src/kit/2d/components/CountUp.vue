@@ -5,7 +5,7 @@
 <script setup lang="ts">
 // Rolling number: 0 → value on first render, old → new on data refresh. Thousands separators.
 import { computed, onBeforeUnmount, ref, watch } from 'vue'
-import { tweenNumber, useReducedMotion } from './motion'
+import { tweenNumber, useReducedMotion } from '@/kit/core/motion'
 
 const props = withDefaults(
   defineProps<{

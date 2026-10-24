@@ -18,6 +18,7 @@ from math import gcd
 from pathlib import Path
 from typing import Any
 
+from bigviz.catalog import look
 from bigviz.spec import PALETTE_KEYS, Spec, load_preset, localised
 
 PALETTE_ROLES = {
@@ -187,7 +188,7 @@ def _layout(spec: Spec, hero: str | None, palette: dict[str, str]) -> list[str]:
             continue
         out.append(f"{col.capitalize()} column, top to bottom:")
         for i, p in enumerate(panels, 1):
-            out.append(f"{i}. Panel {_q(p['title'])} ({p['type']} chart)")
+            out.append(f"{i}. Panel {_q(p['title'])}: {look(p['type'])}")
             out += [f"   {line}" for line in format_data(p["data"])]
             if p["notes"]:
                 out.append(f"   Notes: {p['notes']}")
@@ -240,7 +241,7 @@ def panel_prompt(spec: Spec, panel_id: str) -> str:
         f"of the {p['column']} column panel titled {_q(p['title'])}. Every other area (header, KPI "
         f"cards, hero, all other panels) stays exactly as it is: same position, size, text, colours "
         f"and light. Keep the panel frame and its title bar unchanged. {FRAME_RULE}",
-        f"## New panel content ({p['type']} chart)\n{data}" + (f"\nNotes: {p['notes']}" if p["notes"] else ""),
+        f"## New panel content: {look(p['type'])}\n{data}" + (f"\nNotes: {p['notes']}" if p["notes"] else ""),
         "## Style\n" + localised(pre["panel"], loc)
         + "\nThe panel's glow and detail level match the rest of the screen and never outshine the hero.",
         "## Typography (MOST IMPORTANT)\n" + localised(pre["typography"], loc) + "\n" + TEXT_LANG[loc]

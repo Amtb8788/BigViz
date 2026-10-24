@@ -2,10 +2,10 @@
  * ECharts options for the city screen. Colours come from the theme tokens via readPalette() (and
  * `--bv-danger` for critical), so the charts match the 3D beacons and the CSS.
  */
-import { escapeHtml, type EChartsOption } from '@/screen/echarts'
-import { ENTRANCE } from '@/screen/motion'
-import { alpha, type Palette } from '@/screen/palette'
-import type { AlertLevel } from '@/screen3d/types'
+import { escapeHtml, type EChartsOption } from '@/kit/2d/charts/echarts'
+import { ENTRANCE } from '@/kit/core/motion'
+import { alpha, type Palette } from '@/kit/core/palette'
+import type { AlertLevel } from '@/kit/3d/types'
 import type { CityDistrict, CityTrend } from './types'
 
 const ENTER_DELAY = ENTRANCE.content * 1000

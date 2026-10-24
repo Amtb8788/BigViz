@@ -173,9 +173,10 @@ BigViz/
 [`templates/vue3-echarts`](templates/vue3-echarts) 是独立的 Vite + Vue 3 + TypeScript 工程，不依赖任何 UI 库，
 组件可以直接拷进现有项目：
 
-- **`src/screen/`**：`BigScreen`、`ScreenPanel`、`ScreenChart`、`RankList`、`CountUp`、`KpiCards`、
-  `HeroHub`、`Podium`、`motion.ts`、`theme.css`
-- **`src/screen3d/`**：`ThreeStage` 和 `CityHero`，按需懒加载，2D 页面不会下载 three.js
+- **`src/kit/core/`**：`BigScreen`、`theme.css`、配色、动效和公共类型
+- **`src/kit/2d/`**：`ScreenPanel`、`ScreenChart`、`RankList`、`KpiCards`、`Podium`、`GeoMap`、
+  `LiquidFill`、`ScrollTable`、`AlertFeed`、`FlipNumber` 等（见 `#/gallery`）
+- **`src/kit/3d/`**：`ThreeStage` 和 `CityHero`，按需懒加载，2D 页面不会下载 three.js
 
 数据走 `fetch`，带运行时校验、静默刷新、失败保留上次数据。把 `VITE_API_URL`（2D）或
 `VITE_CITY_API_URL`（3D 城市）指向你的后端，就能接上真实数据。
@@ -210,7 +211,7 @@ bigviz overlay shots/full.png designs/<final>.png --alpha 0.5
 | [Usage guide (English)](docs/USAGE.md) | 英文版手册 |
 | [三句话做出一块大屏](docs/guide-getting-started.zh-CN.md) | 零基础新手 |
 | [Spec 字段说明](docs/guide-spec.md) | `bigviz.yaml` 的每个字段 |
-| [3D 主视觉指南](docs/guide-3d.md) | `screen3d` 组件和数字孪生城市 |
+| [3D 主视觉指南](docs/guide-3d.md) | `kit/3d` 组件和数字孪生城市 |
 | [抠图指南](docs/guide-matting.md) | 抠图方法选择与调参 |
 | [架构](docs/ARCHITECTURE.md) | 仓库结构，CLI、模板、技能之间的约定 |
 

@@ -27,8 +27,8 @@
 // element its own isolated group, and the children's `mix-blend-mode: screen` then blends with
 // nothing instead of with the trophy pixels underneath. Animate the children instead.
 import { computed } from 'vue'
-import { ENTRANCE } from './motion'
-import type { CrownGeometry } from './types'
+import { ENTRANCE } from '@/kit/core/motion'
+import type { CrownGeometry } from '../types'
 
 const props = defineProps<{
   layer: 'back' | 'front'

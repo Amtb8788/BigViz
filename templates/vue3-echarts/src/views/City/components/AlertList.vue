@@ -25,7 +25,7 @@
 // Live alert list: one button per alert. Clicking selects (the screen flies the camera there);
 // the focused alert is highlighted, whether it was clicked here, on the map or by the carousel.
 import { computed } from 'vue'
-import { ENTRANCE } from '@/screen/motion'
+import { ENTRANCE } from '@/kit/core/motion'
 import { useI18n } from '../i18n'
 import type { CityAlertRecord } from '../types'
 

@@ -13,10 +13,10 @@
 // GPU resource on unmount and falls back to the `#fallback` slot when WebGL is unavailable.
 import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { WebGLRenderer } from 'three'
-import { useScreen } from '@/screen/context'
-import { useDocumentVisible, useReducedMotion } from '@/screen/motion'
-import { disposeObject } from './dispose'
-import type { StageScene, StageSetup, StageState } from './types'
+import { useScreen } from '@/kit/core/context'
+import { useDocumentVisible, useReducedMotion } from '@/kit/core/motion'
+import { disposeObject } from '../dispose'
+import type { StageScene, StageSetup, StageState } from '../types'
 
 /** Never render more than this many device pixels (a 4K canvas at DPR 2 would be 33 MP) */
 const MAX_PIXELS = 1920 * 1080 * 2.25

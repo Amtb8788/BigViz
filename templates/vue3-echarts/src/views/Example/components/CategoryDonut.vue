@@ -19,9 +19,9 @@
 <script setup lang="ts">
 // Redemption mix: donut with a highlight carousel; centre text and legend follow the active slice.
 import { computed, ref } from 'vue'
-import ScreenChart from '@/screen/ScreenChart.vue'
-import { ENTRANCE, useVisibleInterval } from '@/screen/motion'
-import { readPalette } from '@/screen/palette'
+import ScreenChart from '@/kit/2d/components/ScreenChart.vue'
+import { ENTRANCE, useVisibleInterval } from '@/kit/core/motion'
+import { readPalette } from '@/kit/core/palette'
 import { buildCategoryOption, categoryColors } from '../chart-options'
 import { useI18n } from '../i18n'
 import type { ExampleCategory } from '../types'

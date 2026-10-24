@@ -54,11 +54,11 @@
 // names and values are text overlaid at fractional positions, so they stay crisp and live.
 // Remaining ranks continue in a RankList below.
 import { computed } from 'vue'
-import type { BigVizAsset, CrownGeometry, PodiumTag, RankRow } from './types'
+import type { BigVizAsset, CrownGeometry, PodiumTag, RankRow } from '../types'
 import CountUp from './CountUp.vue'
 import RankList from './RankList.vue'
 import PodiumCrown from './PodiumCrown.vue'
-import { ENTRANCE } from './motion'
+import { ENTRANCE } from '@/kit/core/motion'
 
 const props = withDefaults(
   defineProps<{

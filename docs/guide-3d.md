@@ -8,11 +8,11 @@ Live demo: the template's `#/city` route (`npm run dev`, then open `/#/city`).
 
 ## Two kinds of 3D
 
-| | `screen3d` (this guide) | `bigviz-3d` skill |
+| | `kit/3d` (this guide) | `bigviz-3d` skill |
 |---|---|---|
 | What | Procedural night city as the screen's hero | Full scene engine: construction site, factory, park, street, tunnel, bridge |
 | Life | Alert beacons, camera tour | Workers, vehicles, traffic signals, progress over days, weather, IoT devices |
-| Where | `templates/vue3-echarts/src/screen3d/` | `plugins/bigviz/skills/bigviz-3d/assets/engine/` |
+| Where | `templates/vue3-echarts/src/kit/3d/` | `plugins/bigviz/skills/bigviz-3d/assets/engine/` |
 | Use when | A dashboard needs a light 3D backdrop | The scene itself is the product (smart site, digital twin) |
 
 See [`bigviz-3d/SKILL.md`](../plugins/bigviz/skills/bigviz-3d/SKILL.md) for the engine.
@@ -34,9 +34,9 @@ The mockup prompt then describes the 3D city, and the cut list skips the hero im
 
 | Path (in `templates/vue3-echarts`) | What |
 |---|---|
-| `src/screen3d/ThreeStage.vue` | Canvas, renderer, loop, zoom-aware sizing, dispose, WebGL fallback |
-| `src/screen3d/CityHero.vue` | Public component: city + beacons + camera tour |
-| `src/screen3d/scenes/` | The procedural city |
+| `src/kit/3d/components/ThreeStage.vue` | Canvas, renderer, loop, zoom-aware sizing, dispose, WebGL fallback |
+| `src/kit/3d/components/CityHero.vue` | Public component: city + beacons + camera tour |
+| `src/kit/3d/scenes/` | The procedural city |
 | `src/views/City/` | Reference screen: glass panels over the city |
 
 `three` is pinned to an exact version and lazy-loaded. 2D-only screens never download it.

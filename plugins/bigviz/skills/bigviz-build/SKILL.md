@@ -1,6 +1,6 @@
 ---
 name: bigviz-build
-description: "Build the production Vue 3 + TypeScript + ECharts big-screen page from bigviz.yaml, the picked mockup and assets.manifest.ts: copy the vue3-echarts template or embed its src/screen kit into an existing app, map spec panels to components, wire entrance and loop motion with reduced-motion fallbacks, and scale with CSS zoom. Use when implementing or coding a data dashboard, big screen, command center, cockpit or visualization screen page, embedding a screen in an admin app, or when the user says 实现大屏页面, 写大屏代码, 数据大屏开发, 驾驶舱页面, 指挥中心页面, 大屏适配, 大屏动效."
+description: "Build the production Vue 3 + TypeScript + ECharts big-screen page from bigviz.yaml, the picked mockup and assets.manifest.ts: copy the vue3-echarts template or embed its src/kit folder into an existing app, map spec panels to components, wire entrance and loop motion with reduced-motion fallbacks, and scale with CSS zoom. Use when implementing or coding a data dashboard, big screen, command center, cockpit or visualization screen page, embedding a screen in an admin app, or when the user says 实现大屏页面, 写大屏代码, 数据大屏开发, 驾驶舱页面, 指挥中心页面, 大屏适配, 大屏动效."
 ---
 
 # BigViz build
@@ -12,8 +12,8 @@ charts are components.
 
 ### 1. Choose the host
 - New project: copy `templates/vue3-echarts` from the BigViz repo, then `npm ci`.
-- Existing Vue 3 app: copy `src/screen/` (the kit) into the app and add `echarts` if missing.
-  Do not add a UI library for the screen.
+- Existing Vue 3 app: copy `src/kit/core/` and `src/kit/2d/` into the app's `src/kit/`, keep
+  the `@` → `src` alias, and add `echarts` if missing. Do not add a UI library for the screen.
 Ask the user which applies if it is not obvious from the repo.
 
 ### 2. Map panels to components
@@ -25,11 +25,17 @@ Read `bigviz.yaml` and `design.final`. For each panel in reading order:
 | `rank` | `ScreenPanel` + `RankList` |
 | `kpi` / top-level `kpis` | `KpiCards` + `CountUp` |
 | `podium` | `ScreenPanel` + published podium asset + `RankList` for the rest |
+| `gauge`, `radar`, `funnel` | `ScreenPanel` + `ScreenChart` with `gaugeOption` / `radarOption` / `funnelOption` from `kit/2d/charts/options.ts` |
+| `liquid` | `ScreenPanel` + `LiquidFill` |
+| `map` | `ScreenPanel` + `GeoMap` (pass a `loader` that returns GeoJSON; ask the user for real boundaries, never invent them) |
+| `scroll-table` | `ScreenPanel` + `ScrollTable` |
+| `alerts` | `ScreenPanel` + `AlertFeed` |
+| `flip` | `FlipNumber` (header strip or inside a panel) |
 | `table`, `custom` | `ScreenPanel` + a local component |
 | `hero` | `HeroHub` with the hero asset and `hero.nodes` |
 
 Put data in a mock JSON next to the view (pattern: `src/mock/example.json`), not inline in
-templates. Theme tokens come from `src/screen/theme.css` (CSS custom properties from the
+templates. Theme tokens come from `src/kit/core/theme.css` (CSS custom properties from the
 palette); never hard-code colours.
 
 ### 3. Geometry
@@ -55,9 +61,10 @@ palette); never hard-code colours.
   it isolates the blend. Animate children instead.
 
 ### 6. 3D hero (`hero.mode: three`)
-- Use `CityHero` from the template's `src/screen3d/` kit as a full-bleed layer behind the
-  panels; `views/City/` is the reference. Copy the whole `screen3d/` folder and add `three`
-  at the template's pinned version. Never import three statically from a 2D view.
+- Use `CityHero` from the template's `src/kit/3d/` kit as a full-bleed layer behind the
+  panels; `views/City/` is the reference. Copy the whole `kit/3d/` folder and add `three`
+  at the template's pinned version. Never import three statically from a 2D view, and keep
+  `kit/2d` and `kit/3d` independent (both may import `kit/core`).
 - Map `hero.nodes` and alert-like panel rows to `alerts` (`x`, `z` in -1..1); pass
   `hero.seed` as `seed`. Clicking a list row calls `flyTo(id)`.
 - Pass the published hero image (if any) as `fallback`; it shows when WebGL fails.

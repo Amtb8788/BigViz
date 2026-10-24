@@ -1,23 +1,7 @@
-/** Shared types for the BigViz screen kit. */
+/** Types for the 2D kit. `BigVizAsset` and `AlertLevel` live in `core/types` and are re-exported. */
+import type { AlertLevel, BigVizAsset } from '@/kit/core/types'
 
-/**
- * One published asset, exactly as `bigviz publish` writes it into `assets.manifest.ts`.
- * All geometry comes from measuring the final PNG, so components never hard-code aspect ratios.
- */
-export interface BigVizAsset {
-  /** Asset id from `bigviz.yaml` `assets[].id` */
-  id: string
-  /** Bundler-resolved URL (the manifest imports the PNG) */
-  src: string
-  /** Natural pixel width */
-  width: number
-  /** Natural pixel height */
-  height: number
-  /** width / height, rounded to 4 decimals */
-  aspect: number
-  /** Transparent margins (alpha ≤ 8) as fractions: l/r of width, t/b of height */
-  trim: { l: number; t: number; r: number; b: number }
-}
+export type { AlertLevel, BigVizAsset }
 
 /** Row rendered by RankList / Podium */
 export interface RankRow {
@@ -82,4 +66,41 @@ export interface HubNode {
   value: number
   unit?: string
   icon?: BigVizAsset
+}
+
+/** Column of ScrollTable */
+export interface ScrollColumn<R> {
+  key: string
+  title: string
+  /** CSS grid track, e.g. '2fr' or '80px'. Default 1fr. */
+  width?: string
+  align?: 'left' | 'center' | 'right'
+  format?: (row: R) => string
+  /** Colour the cell: 'ok' | 'warn' | 'danger' | 'accent' */
+  tone?: (row: R) => string | undefined
+  /** Render the value as a pill (status, level) */
+  badge?: boolean
+}
+
+/** One row of AlertFeed */
+export interface AlertItem {
+  id: string | number
+  level: AlertLevel
+  title: string
+  /** Where it happened (site, device, area) */
+  source?: string
+  /** Display time, already formatted (e.g. '14:32:05') */
+  time: string
+}
+
+/** One level of GeoMap (country, province, city, site …) */
+export interface GeoLevel {
+  /** Code passed to the loader; the GeoJSON `adcode` of the parent region */
+  code: string
+  name: string
+}
+
+/** Minimal GeoJSON shape GeoMap needs: features with `properties.name` (and `adcode` to drill) */
+export interface GeoJSONLike {
+  features: { properties: { name?: string; adcode?: string | number } }[]
 }

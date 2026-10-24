@@ -20,7 +20,7 @@
 <script setup lang="ts">
 // Panel frame: glowing border, corner marks, title bar that unrolls on entrance. Content via slot.
 import { computed, useId } from 'vue'
-import { ENTRANCE } from './motion'
+import { ENTRANCE } from '@/kit/core/motion'
 
 const props = withDefaults(
   defineProps<{

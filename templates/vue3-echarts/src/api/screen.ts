@@ -4,7 +4,7 @@
  * a 60 s silent refresh that pauses while the page is hidden.
  */
 import { onMounted, ref, shallowRef } from 'vue'
-import { useVisibleInterval } from '@/screen/motion'
+import { useVisibleInterval } from '@/kit/core/motion'
 import type { ExampleScreenData, KpiId } from '@/views/Example/types'
 import { ShapeError, arr, num, obj, str } from './validate'
 
