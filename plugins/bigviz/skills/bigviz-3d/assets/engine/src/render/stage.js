@@ -80,6 +80,10 @@ export class Stage {
   _buildComposer() {
     const rt = new THREE.WebGLRenderTarget(1, 1, { type: THREE.HalfFloatType, samples: 4 })
     this.composer = new EffectComposer(this.renderer, rt)
+    // the scene always renders into renderTarget1 (MSAA + depth texture); see _pinSceneTarget
+    this.sceneDepth = new THREE.DepthTexture(1, 1)
+    this.sceneDepth.type = THREE.UnsignedIntType
+    this.composer.renderTarget1.depthTexture = this.sceneDepth
     this.renderPass = new RenderPass(this.scene, this.camera)
     // one pass, always enabled (amount 0 = pass-through) so the ping-pong order stays fixed
     this.tiltPass = new ShaderPass(TiltShiftShader)
@@ -121,6 +125,10 @@ export class Stage {
       this.bloom.strength = 0
       if (!this.gtao) {
         this.gtao = new GTAOPass(this.scene, this.camera, 512, 512)
+        // depth from the scene pass, normals reconstructed from depth: no second geometry pass.
+        // (passing depthTexture to the constructor crashes in r186: it reads normalRenderTarget
+        // before creating it, so build the default G-buffer first, then swap the source)
+        this.gtao.setGBuffer(this.sceneDepth)
         this.gtao.blendIntensity = 0.85
         this.gtao.updateGtaoMaterial({ radius: 1.6, distanceExponent: 1.5, thickness: 2, scale: 1, samples: 12 })
         this.gtao.updatePdMaterial({ lumaPhi: 10, depthPhi: 2, normalPhi: 3, radius: 6, rings: 2, samples: 12 })
@@ -193,11 +201,23 @@ export class Stage {
       if (this.gtao) this.gtao.camera = camera
       const b = this.bloom.enabled
       this.bloom.enabled = bloomOn
+      this._pinSceneTarget()
       this.composer.render()
       this.bloom.enabled = b
     } else {
       this.renderer.render(this.scene, camera)
     }
+  }
+
+  /**
+   * RenderPass draws into composer.readBuffer, and the pass chain swaps an odd or even number of
+   * times depending on which passes are enabled. Without pinning, the scene alternated between the
+   * MSAA target and the plain one (AA flickering frame to frame, AO reading a stale depth).
+   */
+  _pinSceneTarget() {
+    const C = this.composer
+    C.readBuffer = C.renderTarget1
+    C.writeBuffer = C.renderTarget2
   }
 
   /**

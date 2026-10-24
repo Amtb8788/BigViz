@@ -118,6 +118,8 @@ function colorable(m) {
   return m.isMeshStandardMaterial && !m.map && !m.emissiveMap && !m.transparent && !m.userData.live && !m.userData.owned && !m.vertexColors && m.emissiveIntensity * m.emissive.getHex() === 0
 }
 
+const noShadow = (m) => m.isMeshBasicMaterial || m.name === 'decals' || m.name?.startsWith('light.')
+
 /**
  * Merge static meshes under `root` into few draw calls. Meshes below a `dynamic` node are
  * skipped (they are baked separately by bakeTree). colors:true folds plain-colour materials
@@ -150,8 +152,10 @@ export function bake(root, { colors = false, name = 'baked' } = {}) {
     }
     // realistic: one bucket per material (small cast:false trims cast anyway, halving calls)
     const real = isReal()
-    const key = material.uuid + (real || o.castShadow ? 'c' : '')
-    if (!buckets.has(key)) buckets.set(key, { material, cast: real || o.castShadow, geos: [] })
+    // emissive light parts, decals and unlit meshes add shadow-pass draw calls but no visible shadow
+    const cast = (real || o.castShadow) && !noShadow(material)
+    const key = material.uuid + (cast ? 'c' : '')
+    if (!buckets.has(key)) buckets.set(key, { material, cast, geos: [] })
     buckets.get(key).geos.push(g)
     victims.push(o)
   })
